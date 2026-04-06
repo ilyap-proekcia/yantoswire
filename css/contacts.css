@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&display=swap');
+
+/* ─── PAGE OVERRIDES (scrollable) ───────────────────────────── */
+html, body {
+  height: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: var(--graphite);
+}
+
+/* Push content below fixed header */
+.contacts-main {
+  padding-top: var(--header-h);
+}
+
+/* Footer: reset configurator defaults */
+.site-footer {
+  position: relative;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Callback button — sandstone (same as about.html) */
+.hdr-cta--contacts {
+  background: var(--sandstone);
+  color: var(--graphite);
+}
+.hdr-cta--contacts:hover {
+  opacity: 0.88;
+}

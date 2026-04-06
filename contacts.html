@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Контакти — YantosWire</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/contacts.css">
+</head>
+<body>
+
+<!-- ─── HEADER ───────────────────────────────────────────────── -->
+<header class="site-header hdr-theme-light" id="site-header">
+  <a class="hdr-logo" href="index.html">
+    <span class="hdr-logo-imgs">
+      <img src="YantosWire_logo.svg" class="hdr-logo-img hdr-logo-img--dark" alt="YantosWire">
+      <img src="YantosWire_logo_light.svg" class="hdr-logo-img hdr-logo-img--light" alt="YantosWire">
+    </span>
+    <div class="hdr-logo-sep"></div>
+    <span class="hdr-logo-tagline">Виробник<br>металевої<br>продукції</span>
+  </a>
+  <nav class="hdr-nav">
+    <a href="index.html#app">Конфігуратор</a>
+    <a href="about.html">Про завод</a>
+    <a href="works.html">Наші роботи</a>
+    <a href="contacts.html" class="hdr-nav--active">Контакти</a>
+  </nav>
+  <div class="hdr-right">
+    <a href="tel:+380673323521" class="hdr-phone-btn">+380 67 332 35 21</a>
+    <button class="hdr-cta hdr-cta--contacts">Зворотній дзвінок</button>
+  </div>
+</header>
+
+<!-- ─── MAIN ──────────────────────────────────────────────────── -->
+<main class="contacts-main">
+
+  <!-- ═══ CONTACTS BLOCK ═══════════════════════════════════════ -->
+  <!-- Єдиний блок контактів: той самий HTML на всіх сторінках.
+       При підключенні WordPress — замінити на include/template part. -->
+  <section class="about-contacts visible" data-hdr-theme="light" id="contacts">
+
+    <h1 class="contacts-title">КОНТАКТИ</h1>
+
+    <div class="contacts-card">
+      <img class="contacts-pattern" src="assets/images/pattern_contact.svg" alt="" aria-hidden="true" loading="lazy">
+
+      <p class="contacts-tagline">Зв'яжіться<br>з нами</p>
+
+      <form class="contacts-form" action="#" method="post" novalidate>
+        <div class="contacts-fields">
+          <div class="contacts-field">
+            <label class="contacts-field-label" for="contact-name">Ім'я</label>
+            <input class="contacts-field-input" type="text" id="contact-name" name="name" placeholder="Ваше ім'я" autocomplete="given-name" required>
+          </div>
+          <div class="contacts-field">
+            <label class="contacts-field-label" for="contact-phone">Номер телефону</label>
+            <input class="contacts-field-input" type="tel" id="contact-phone" name="phone" placeholder="+38 000 000 00 00" autocomplete="tel" required>
+          </div>
+        </div>
+
+        <button class="contacts-submit" type="submit">Відправити</button>
+
+        <p class="contacts-privacy">Натискаючи "Відправити", я приймаю правила обробки персональних даних</p>
+      </form>
+    </div>
+
+    <div class="contacts-info">
+      <a href="tel:+380673323521">+380 67 332 35 21</a>
+      <a href="tel:+393347344242">+39 334 734 42 42</a>
+      <a href="mailto:hello@yantoswire.com">hello@yantoswire.com</a>
+      <a href="mailto:mv@yantoswire.com">mv@yantoswire.com</a>
+    </div>
+
+  </section>
+
+</main>
+
+<!-- ─── FOOTER ───────────────────────────────────────────────── -->
+<footer class="site-footer">
+  <div class="ftr-inner">
+    <div class="ftr-copy">
+      <span class="ftr-copy-brand">YantosWire</span>
+      <span class="ftr-copy-text">© <span class="ftr-year"></span> Усі права захищені</span>
+    </div>
+    <div class="ftr-links">
+      <a href="#" class="ftr-link">Договір оферти</a>
+      <a href="#" class="ftr-link">Політика конфіденційності</a>
+    </div>
+    <div class="ftr-credit">
+      <span class="ftr-credit-text">Хто створив сайт?</span>
+      <a href="https://proekcia.com" target="_blank" rel="noopener noreferrer" class="ftr-credit-logo">
+        <img src="assets/images/Proekcia_logo.svg" alt="Proekcia" width="114" height="24" loading="lazy">
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* Авто-рік */
+  document.querySelectorAll('.ftr-year').forEach(el => el.textContent = new Date().getFullYear());
+
+  /* Адаптивний хедер */
+  const hdr = document.getElementById('site-header');
+  function updateHdrTheme() {
+    const checkY = hdr.offsetHeight + 2;
+    let theme = 'dark';
+    document.querySelectorAll('main section').forEach(el => {
+      const r = el.getBoundingClientRect();
+      if (r.top <= checkY && r.bottom > checkY) theme = el.dataset.hdrTheme ?? 'dark';
+    });
+    hdr.classList.toggle('hdr-theme-light', theme === 'light');
+  }
+  window.addEventListener('scroll', updateHdrTheme, { passive: true });
+  updateHdrTheme();
+</script>
+<script src="js/wipe-headings.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Паркани з профільної металевої труби</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- Hero background video (sits behind the 3D canvas) -->
+<video id="hero-bg" autoplay muted loop playsinline>
+  <source src="assets/videos/hero-1.mp4" type="video/mp4">
+</video>
+
+<!-- 3D canvas: Three.js renders the fence here -->
+<canvas id="main-canvas"></canvas>
+
+<!-- ─── SITE HEADER ─────────────────────────────────────────────── -->
+<header class="site-header about-header hdr-theme-light" id="site-header">
+  <a class="hdr-logo" href="index.html">
+    <span class="hdr-logo-imgs">
+      <img src="YantosWire_logo.svg" class="hdr-logo-img hdr-logo-img--dark" alt="YantosWire">
+      <img src="YantosWire_logo_light.svg" class="hdr-logo-img hdr-logo-img--light" alt="YantosWire">
+    </span>
+    <div class="hdr-logo-sep"></div>
+    <span class="hdr-logo-tagline">Виробник<br>металевої<br>продукції</span>
+  </a>
+  <nav class="hdr-nav">
+    <a href="#app" class="hdr-nav--active">Конфігуратор</a>
+    <a href="about.html">Про завод</a>
+    <a href="works.html">Наші роботи</a>
+    <a href="contacts.html">Контакти</a>
+  </nav>
+  <div class="hdr-right">
+    <a href="tel:+380673323521" class="hdr-phone-btn">+380 67 332 35 21</a>
+    <button class="hdr-cta hdr-cta--about">Зворотній дзвінок</button>
+  </div>
+</header>
+
+<!-- ─── HERO ────────────────────────────────────────────────────── -->
+<div id="hero">
+  <div class="hero-left">
+    <div class="hero-badge">профільна металева труба</div>
+    <h1>Красиві паркани<br>з металу</h1>
+    <p class="hero-sub">8 стандартних рішень зі знижкою -15% або індивідуальне замовлення</p>
+    <div class="hero-features">
+      <div class="feat"><div class="feat-dot"></div><span>8 стандартних рішень</span></div>
+      <div class="feat"><div class="feat-dot"></div><span>Знижка -15%</span></div>
+      <div class="feat"><div class="feat-dot"></div><span>Доставка по Україні</span></div>
+    </div>
+    <div class="hero-cta-row">
+      <button class="btn-hero" id="btn-start">Перейти до підбору</button>
+      <p class="cta-hint">Пройдіть короткий підбір. У кінці залишиться лише надіслати запит на прорахунок.</p>
+    </div>
+  </div>
+  <div class="hero-3d-space"></div>
+</div>
+
+<!-- ─── CONFIGURATOR APP ─────────────────────────────────────────── -->
+<div id="app">
+  <div class="main">
+
+    <!-- 3D Viewport (desktop only) -->
+    <div id="viewport">
+      <div class="stats-overlay">
+        <div class="stat-chip">Довжина: <span id="stat-len">4</span> м</div>
+        <div class="stat-chip">Секцій: <span id="stat-sec">2</span></div>
+        <div class="stat-chip">Стовпів: <span id="stat-col">3</span></div>
+      </div>
+      <div class="viewport-hint">ЛКМ — обертання · Колесо — зум</div>
+      <div id="mobile-pull-hint" style="
+        display:none;
+        position:absolute;bottom:100px;left:50%;transform:translateX(-50%);
+        background:rgba(63,68,67,0.75);color:#fff;
+        font-family:'Montserrat',sans-serif;font-weight:700;font-size:10px;letter-spacing:1px;
+        padding:8px 16px;border-radius:20px;white-space:nowrap;pointer-events:none;
+        animation:fadeUp 0.4s ease 1s both;
+      ">↑ ПОТЯГНИ ДО ПІДБОРУ ↑</div>
+    </div>
+
+    <!-- Side panel -->
+    <div class="panel">
+
+      <!-- ── Step 0: Розміри ──────────────────────────────────────── -->
+      <div class="step-content active" id="step-0">
+        <div class="step-body">
+          <h2 class="panel-title">Які розміри паркану потрібні?</h2>
+          <div class="dim-grid">
+            <div class="dim-box">
+              <div class="dim-label">Довжина, м</div>
+              <div class="dim-value" id="dim-length-val">5</div>
+              <div class="dim-btns">
+                <button class="dim-btn" onclick="adjDim('length',-1)">−</button>
+                <button class="dim-btn" onclick="adjDim('length',+1)">+</button>
+              </div>
+            </div>
+            <div class="dim-box">
+              <div class="dim-label">Висота, м</div>
+              <div class="dim-value" id="dim-height-val">2</div>
+              <div class="dim-btns">
+                <button class="dim-btn" onclick="adjDim('height',-0.5)">−</button>
+                <button class="dim-btn" onclick="adjDim('height',+0.5)">+</button>
+              </div>
+            </div>
+          </div>
+          <input type="hidden" id="f-length" value="5">
+          <input type="hidden" id="f-height" value="2.0">
+        </div>
+        <div class="panel-nav panel-nav--single">
+          <button class="btn-next" onclick="goStep(1)">ДАЛІ</button>
+        </div>
+      </div>
+
+      <!-- ── Step 1: Що входить у замовлення ─────────────────────── -->
+      <div class="step-content" id="step-1">
+        <div class="step-body">
+          <h2 class="panel-title">Що має входити у замовлення?</h2>
+          <div class="pkg-grid" id="rg-package">
+
+            <div class="pkg-card selected" data-v="fence" onclick="selectPkg(this,'fence')">
+              <div class="pkg-check"></div>
+              <div class="pkg-preview">
+                <svg viewBox="0 0 80 40" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="2"  y="4" width="3"  height="32" fill="#3F4443"/>
+                  <rect x="75" y="4" width="3"  height="32" fill="#3F4443"/>
+                  <rect x="2"  y="8" width="76" height="2"  fill="#3F4443"/>
+                  <rect x="2"  y="28" width="76" height="2" fill="#3F4443"/>
+                  <rect x="10" y="4" width="2" height="32" fill="#3F4443"/>
+                  <rect x="18" y="4" width="2" height="32" fill="#3F4443"/>
+                  <rect x="26" y="4" width="2" height="32" fill="#3F4443"/>
+                  <rect x="34" y="4" width="2" height="32" fill="#3F4443"/>
+                  <rect x="42" y="4" width="2" height="32" fill="#3F4443"/>
+                  <rect x="50" y="4" width="2" height="32" fill="#3F4443"/>
+                  <rect x="58" y="4" width="2" height="32" fill="#3F4443"/>
+                  <rect x="66" y="4" width="2" height="32" fill="#3F4443"/>
+                </svg>
+              </div>
+              <div class="pkg-label">Лише паркан</div>
+            </div>
+
+            <div class="pkg-card" data-v="fence+gate-small" onclick="selectPkg(this,'fence+gate-small')">
+              <div class="pkg-check"></div>
+              <div class="pkg-preview">
+                <svg viewBox="0 0 80 40" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="2"  y="4" width="3" height="32" fill="#3F4443"/>
+                  <rect x="75" y="4" width="3" height="32" fill="#3F4443"/>
+                  <rect x="2"  y="8" width="26" height="2" fill="#3F4443"/>
+                  <rect x="2"  y="28" width="26" height="2" fill="#3F4443"/>
+                  <rect x="52" y="8" width="26" height="2" fill="#3F4443"/>
+                  <rect x="52" y="28" width="26" height="2" fill="#3F4443"/>
+                  <rect x="10" y="4" width="2" height="32" fill="#3F4443"/>
+                  <rect x="18" y="4" width="2" height="32" fill="#3F4443"/>
+                  <rect x="60" y="4" width="2" height="32" fill="#3F4443"/>
+                  <rect x="68" y="4" width="2" height="32" fill="#3F4443"/>
+                  <rect x="28" y="4" width="3" height="32" fill="#3F4443"/>
+                  <rect x="49" y="4" width="3" height="32" fill="#3F4443"/>
+                  <rect x="31" y="8" width="18" height="2" fill="#5B6770"/>
+                  <rect x="31" y="28" width="18" height="2" fill="#5B6770"/>
+                  <rect x="34" y="4" width="1.5" height="32" fill="#5B6770"/>
+                  <rect x="40" y="4" width="1.5" height="32" fill="#5B6770"/>
+                  <rect x="46" y="4" width="1.5" height="32" fill="#5B6770"/>
+                </svg>
+              </div>
+              <div class="pkg-label">Паркан + хвіртка</div>
+            </div>
+
+            <div class="pkg-card" data-v="fence+gate" onclick="selectPkg(this,'fence+gate')">
+              <div class="pkg-check"></div>
+              <div class="pkg-preview">
+                <svg viewBox="0 0 80 40" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="2"  y="4" width="3" height="32" fill="#3F4443"/>
+                  <rect x="75" y="4" width="3" height="32" fill="#3F4443"/>
+                  <rect x="2"  y="8" width="20" height="2" fill="#3F4443"/>
+                  <rect x="2"  y="28" width="20" height="2" fill="#3F4443"/>
+                  <rect x="60" y="8" width="18" height="2" fill="#3F4443"/>
+                  <rect x="60" y="28" width="18" height="2" fill="#3F4443"/>
+                  <rect x="8"  y="4" width="2" height="32" fill="#3F4443"/>
+                  <rect x="14" y="4" width="2" height="32" fill="#3F4443"/>
+                  <rect x="64" y="4" width="2" height="32" fill="#3F4443"/>
+                  <rect x="70" y="4" width="2" height="32" fill="#3F4443"/>
+                  <rect x="22" y="4" width="3" height="32" fill="#3F4443"/>
+                  <rect x="55" y="4" width="3" height="32" fill="#3F4443"/>
+                  <rect x="25" y="8" width="30" height="2" fill="#5B6770"/>
+                  <rect x="25" y="20" width="30" height="2" fill="#5B6770"/>
+                  <rect x="25" y="28" width="30" height="2" fill="#5B6770"/>
+                  <rect x="29" y="4" width="2" height="32" fill="#5B6770"/>
+                  <rect x="36" y="4" width="2" height="32" fill="#5B6770"/>
+                  <rect x="43" y="4" width="2" height="32" fill="#5B6770"/>
+                  <rect x="50" y="4" width="2" height="32" fill="#5B6770"/>
+                </svg>
+              </div>
+              <div class="pkg-label">Паркан + ворота</div>
+            </div>
+
+            <div class="pkg-card" data-v="fence+gate+small" onclick="selectPkg(this,'fence+gate+small')">
+              <div class="pkg-check"></div>
+              <div class="pkg-preview">
+                <svg viewBox="0 0 80 40" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="2"  y="4" width="2" height="32" fill="#3F4443"/>
+                  <rect x="78" y="4" width="2" height="32" fill="#3F4443"/>
+                  <rect x="2"  y="8" width="14" height="2" fill="#3F4443"/>
+                  <rect x="2"  y="28" width="14" height="2" fill="#3F4443"/>
+                  <rect x="66" y="8" width="14" height="2" fill="#3F4443"/>
+                  <rect x="66" y="28" width="14" height="2" fill="#3F4443"/>
+                  <rect x="6"  y="4" width="1.5" height="32" fill="#3F4443"/>
+                  <rect x="11" y="4" width="1.5" height="32" fill="#3F4443"/>
+                  <rect x="69" y="4" width="1.5" height="32" fill="#3F4443"/>
+                  <rect x="74" y="4" width="1.5" height="32" fill="#3F4443"/>
+                  <rect x="16" y="4" width="2" height="32" fill="#3F4443"/>
+                  <rect x="32" y="4" width="2" height="32" fill="#3F4443"/>
+                  <rect x="48" y="4" width="2" height="32" fill="#3F4443"/>
+                  <rect x="64" y="4" width="2" height="32" fill="#3F4443"/>
+                  <rect x="18" y="8" width="14" height="2" fill="#5B6770"/>
+                  <rect x="18" y="20" width="14" height="2" fill="#5B6770"/>
+                  <rect x="18" y="28" width="14" height="2" fill="#5B6770"/>
+                  <rect x="22" y="4" width="1.5" height="32" fill="#5B6770"/>
+                  <rect x="27" y="4" width="1.5" height="32" fill="#5B6770"/>
+                  <rect x="34" y="8" width="14" height="2" fill="#5B6770"/>
+                  <rect x="34" y="20" width="14" height="2" fill="#5B6770"/>
+                  <rect x="34" y="28" width="14" height="2" fill="#5B6770"/>
+                  <rect x="38" y="4" width="1.5" height="32" fill="#5B6770"/>
+                  <rect x="43" y="4" width="1.5" height="32" fill="#5B6770"/>
+                </svg>
+              </div>
+              <div class="pkg-label">Паркан + хвіртка + ворота</div>
+            </div>
+
+          </div>
+        </div>
+        <div class="panel-nav">
+          <button class="btn-back" onclick="goStep(0)">НАЗАД</button>
+          <button class="btn-next" onclick="goStep(2)">ДАЛІ</button>
+        </div>
+      </div>
+
+      <!-- ── Step 2: Доставка ─────────────────────────────────────── -->
+      <div class="step-content" id="step-2">
+        <div class="step-body">
+          <h2 class="panel-title">Куди потрібна доставка?</h2>
+          <div class="delivery-banner">
+            <div class="delivery-text">
+              <strong>Доставка по<br>всій Україні</strong>
+            </div>
+            <div class="delivery-truck">
+              <svg viewBox="0 0 130 75" xmlns="http://www.w3.org/2000/svg" fill="none">
+                <!-- Cab -->
+                <rect x="78" y="28" width="42" height="32" rx="3" fill="#895961"/>
+                <rect x="80" y="30" width="22" height="16" rx="2" fill="#C3AD8B" opacity="0.4"/>
+                <!-- Body -->
+                <rect x="4" y="18" width="78" height="42" rx="3" fill="#6b4c52"/>
+                <!-- YantosWire text area -->
+                <rect x="8" y="22" width="70" height="10" rx="1" fill="#C3AD8B" opacity="0.25"/>
+                <!-- Wheels -->
+                <circle cx="22" cy="63" r="9" fill="#3F4443"/>
+                <circle cx="22" cy="63" r="5" fill="#8a8680"/>
+                <circle cx="58" cy="63" r="9" fill="#3F4443"/>
+                <circle cx="58" cy="63" r="5" fill="#8a8680"/>
+                <circle cx="104" cy="63" r="9" fill="#3F4443"/>
+                <circle cx="104" cy="63" r="5" fill="#8a8680"/>
+              </svg>
+            </div>
+          </div>
+          <div class="config-fields">
+            <div class="config-field">
+              <div class="config-field-box">
+                <div class="config-field-label">Місто / населений пункт</div>
+                <input class="config-field-input" id="f-city" type="text" placeholder="">
+              </div>
+            </div>
+            <div class="config-field">
+              <div class="config-field-box">
+                <div class="config-field-label">Адреса</div>
+                <input class="config-field-input" id="f-address" type="text" placeholder="">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel-nav">
+          <button class="btn-back" onclick="goStep(1)">НАЗАД</button>
+          <button class="btn-next" onclick="goStep(3)">ДАЛІ</button>
+        </div>
+      </div>
+
+      <!-- ── Step 3: Варіант замовлення + Стиль паркану ──────────── -->
+      <div class="step-content" id="step-3" style="overflow-y:auto">
+        <div class="step-body">
+          <h2 class="panel-title">Який варіант замовлення вам ближчий?</h2>
+          <div class="accord-list">
+
+            <!-- Стандартне рішення (expanded) -->
+            <div class="accord-item accord-open" id="acc-standard">
+              <div class="accord-head accord-head--on" onclick="selectAccord('standard')">
+                <div class="accord-radio accord-radio--on"></div>
+                <span class="accord-label">Стандартне рішення</span>
+                <span class="accord-chevron accord-chevron--up">
+                  <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 6.5L6 1.5L11 6.5" stroke="#3F4443" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              </div>
+              <div class="accord-body">
+                <div class="accord-marquee-wrap">
+                  <div class="accord-marquee">
+                    &nbsp;Знижка -15%&nbsp;&nbsp;&nbsp;&nbsp;Знижка -15%&nbsp;&nbsp;&nbsp;&nbsp;Знижка -15%&nbsp;&nbsp;&nbsp;&nbsp;Знижка -15%&nbsp;&nbsp;&nbsp;&nbsp;Знижка -15%&nbsp;&nbsp;&nbsp;&nbsp;Знижка -15%&nbsp;&nbsp;&nbsp;&nbsp;Знижка -15%&nbsp;&nbsp;&nbsp;&nbsp;Знижка -15%&nbsp;&nbsp;&nbsp;&nbsp;
+                  </div>
+                </div>
+                <div class="style-grid" id="rg-style">
+
+                  <div class="style-card selected" data-v="1" onclick="selectStyle(this,1)">
+                    <div class="style-check"></div>
+                    <div class="style-preview">
+                      <svg viewBox="0 0 80 40" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="2"  y="2"  width="4"  height="36" fill="#2a2e2d"/>
+                        <rect x="74" y="2"  width="4"  height="36" fill="#2a2e2d"/>
+                        <rect x="6"  y="5"  width="68" height="3"  fill="#2a2e2d"/>
+                        <rect x="6"  y="32" width="68" height="3"  fill="#2a2e2d"/>
+                        <rect x="10" y="8"  width="2"  height="24" fill="#2a2e2d"/>
+                        <rect x="16" y="8"  width="2"  height="24" fill="#2a2e2d"/>
+                        <rect x="22" y="8"  width="2"  height="24" fill="#2a2e2d"/>
+                        <rect x="28" y="8"  width="2"  height="24" fill="#2a2e2d"/>
+                        <rect x="34" y="8"  width="2"  height="24" fill="#2a2e2d"/>
+                        <rect x="40" y="8"  width="2"  height="24" fill="#2a2e2d"/>
+                        <rect x="46" y="8"  width="2"  height="24" fill="#2a2e2d"/>
+                        <rect x="52" y="8"  width="2"  height="24" fill="#2a2e2d"/>
+                        <rect x="58" y="8"  width="2"  height="24" fill="#2a2e2d"/>
+                        <rect x="64" y="8"  width="2"  height="24" fill="#2a2e2d"/>
+                        <rect x="70" y="8"  width="2"  height="24" fill="#2a2e2d"/>
+                      </svg>
+                    </div>
+                    <div class="style-label">Стиль №1</div>
+                  </div>
+
+                  <div class="style-card" data-v="2" onclick="selectStyle(this,2)">
+                    <div class="style-check"></div>
+                    <div class="style-preview">
+                      <svg viewBox="0 0 80 50" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="1"  y="2"  width="4" height="46" fill="#2a2e2d"/>
+                        <rect x="75" y="2"  width="4" height="46" fill="#2a2e2d"/>
+                        <rect x="5" y="18" width="70" height="3" fill="#2a2e2d"/>
+                        <rect x="5" y="28" width="70" height="3" fill="#2a2e2d"/>
+                        <rect x="5" y="38" width="70" height="3" fill="#2a2e2d"/>
+                        <rect x="9"  y="4"  width="2" height="42" fill="#2a2e2d"/>
+                        <rect x="15" y="4"  width="2" height="42" fill="#2a2e2d"/>
+                        <rect x="21" y="4"  width="2" height="42" fill="#2a2e2d"/>
+                        <rect x="27" y="4"  width="2" height="42" fill="#2a2e2d"/>
+                        <rect x="33" y="4"  width="2" height="42" fill="#2a2e2d"/>
+                        <rect x="39" y="4"  width="2" height="42" fill="#2a2e2d"/>
+                        <rect x="45" y="4"  width="2" height="42" fill="#2a2e2d"/>
+                        <rect x="51" y="4"  width="2" height="42" fill="#2a2e2d"/>
+                        <rect x="57" y="4"  width="2" height="42" fill="#2a2e2d"/>
+                        <rect x="63" y="4"  width="2" height="42" fill="#2a2e2d"/>
+                        <rect x="69" y="4"  width="2" height="42" fill="#2a2e2d"/>
+                      </svg>
+                    </div>
+                    <div class="style-label">Стиль №2</div>
+                  </div>
+
+                  <div class="style-card" data-v="3" onclick="selectStyle(this,3)">
+                    <div class="style-check"></div>
+                    <div class="style-preview">
+                      <svg viewBox="0 0 80 50" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="1"  y="2"  width="4" height="46" fill="#2a2e2d"/>
+                        <rect x="75" y="2"  width="4" height="46" fill="#2a2e2d"/>
+                        <rect x="5" y="18" width="70" height="3" fill="#2a2e2d"/>
+                        <rect x="5" y="28" width="70" height="3" fill="#2a2e2d"/>
+                        <rect x="5" y="38" width="70" height="3" fill="#2a2e2d"/>
+                        <rect x="9"  y="4"  width="2" height="46" fill="#2a2e2d"/>
+                        <rect x="15" y="4"  width="2" height="46" fill="#2a2e2d"/>
+                        <rect x="21" y="4"  width="2" height="46" fill="#2a2e2d"/>
+                        <rect x="27" y="4"  width="2" height="46" fill="#2a2e2d"/>
+                        <rect x="33" y="4"  width="2" height="46" fill="#2a2e2d"/>
+                        <rect x="39" y="4"  width="2" height="46" fill="#2a2e2d"/>
+                        <rect x="45" y="4"  width="2" height="46" fill="#2a2e2d"/>
+                        <rect x="51" y="4"  width="2" height="46" fill="#2a2e2d"/>
+                        <rect x="57" y="4"  width="2" height="46" fill="#2a2e2d"/>
+                        <rect x="63" y="4"  width="2" height="46" fill="#2a2e2d"/>
+                        <rect x="69" y="4"  width="2" height="46" fill="#2a2e2d"/>
+                      </svg>
+                    </div>
+                    <div class="style-label">Стиль №3</div>
+                  </div>
+
+                  <div class="style-card" data-v="4" onclick="selectStyle(this,4)">
+                    <div class="style-check"></div>
+                    <div class="style-preview">
+                      <svg viewBox="0 0 80 50" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="1"  y="2"  width="4" height="46" fill="#2a2e2d"/>
+                        <rect x="75" y="2"  width="4" height="46" fill="#2a2e2d"/>
+                        <rect x="1"  y="14" width="78" height="5" fill="#2a2e2d"/>
+                        <rect x="1"  y="36" width="78" height="5" fill="#2a2e2d"/>
+                        <rect x="12" y="0"  width="3" height="41" fill="#2a2e2d"/>
+                        <rect x="21" y="0"  width="3" height="41" fill="#2a2e2d"/>
+                        <rect x="30" y="0"  width="3" height="41" fill="#2a2e2d"/>
+                        <rect x="39" y="0"  width="3" height="41" fill="#2a2e2d"/>
+                        <rect x="48" y="0"  width="3" height="41" fill="#2a2e2d"/>
+                        <rect x="57" y="0"  width="3" height="41" fill="#2a2e2d"/>
+                        <rect x="66" y="0"  width="3" height="41" fill="#2a2e2d"/>
+                      </svg>
+                    </div>
+                    <div class="style-label">Стиль №4</div>
+                  </div>
+
+                  <div class="style-card" data-v="5" onclick="selectStyle(this,5)">
+                    <div class="style-check"></div>
+                    <div class="style-preview">
+                      <svg viewBox="0 0 80 48" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="1"  y="2"  width="5" height="44" fill="#2a2e2d"/>
+                        <rect x="74" y="2"  width="5" height="44" fill="#2a2e2d"/>
+                        <rect x="12" y="2"  width="3" height="44" fill="#2a2e2d"/>
+                        <rect x="65" y="2"  width="3" height="44" fill="#2a2e2d"/>
+                        <rect x="6"  y="5"  width="68" height="4" fill="#2a2e2d"/>
+                        <rect x="6"  y="10" width="68" height="4" fill="#2a2e2d"/>
+                        <rect x="6"  y="15" width="68" height="4" fill="#2a2e2d"/>
+                        <rect x="6"  y="20" width="68" height="4" fill="#2a2e2d"/>
+                        <rect x="6"  y="25" width="68" height="4" fill="#2a2e2d"/>
+                        <rect x="6"  y="30" width="68" height="4" fill="#2a2e2d"/>
+                        <rect x="6"  y="35" width="68" height="4" fill="#2a2e2d"/>
+                        <rect x="6"  y="40" width="68" height="4" fill="#2a2e2d"/>
+                      </svg>
+                    </div>
+                    <div class="style-label">Стиль №5</div>
+                  </div>
+
+                  <div class="style-card" data-v="6" onclick="selectStyle(this,6)">
+                    <div class="style-check"></div>
+                    <div class="style-preview">
+                      <svg viewBox="0 0 80 48" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="1"  y="2"  width="5" height="44" fill="#2a2e2d"/>
+                        <rect x="74" y="2"  width="5" height="44" fill="#2a2e2d"/>
+                        <rect x="12" y="2"  width="3" height="44" fill="#2a2e2d"/>
+                        <rect x="65" y="2"  width="3" height="44" fill="#2a2e2d"/>
+                        <rect x="6"  y="5"  width="68" height="4" fill="#2a2e2d"/>
+                        <rect x="6"  y="10" width="68" height="4" fill="#2a2e2d"/>
+                        <rect x="6"  y="15" width="68" height="4" fill="#2a2e2d"/>
+                        <rect x="6"  y="20" width="68" height="4" fill="#2a2e2d"/>
+                        <rect x="6"  y="25" width="68" height="4" fill="#2a2e2d"/>
+                        <rect x="6"  y="30" width="68" height="4" fill="#2a2e2d"/>
+                        <rect x="6"  y="35" width="68" height="2" fill="#2a2e2d"/>
+                        <rect x="6"  y="39" width="68" height="2" fill="#2a2e2d"/>
+                        <rect x="6"  y="43" width="68" height="2" fill="#2a2e2d"/>
+                      </svg>
+                    </div>
+                    <div class="style-label">Стиль №6</div>
+                  </div>
+
+                  <div class="style-card" data-v="7" onclick="selectStyle(this,7)">
+                    <div class="style-check"></div>
+                    <div class="style-preview">
+                      <svg viewBox="0 0 80 48" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="1"  y="2"  width="5" height="44" fill="#2a2e2d"/>
+                        <rect x="74" y="2"  width="5" height="44" fill="#2a2e2d"/>
+                        <rect x="9"  y="5"  width="2" height="38" fill="#2a2e2d"/>
+                        <rect x="69" y="5"  width="2" height="38" fill="#2a2e2d"/>
+                        <rect x="9"  y="4"  width="62" height="3" fill="#2a2e2d"/>
+                        <rect x="9"  y="41" width="62" height="3" fill="#2a2e2d"/>
+                        <rect x="14" y="7"  width="2" height="34" fill="#2a2e2d"/>
+                        <rect x="20" y="7"  width="2" height="34" fill="#2a2e2d"/>
+                        <rect x="26" y="7"  width="2" height="34" fill="#2a2e2d"/>
+                        <rect x="32" y="7"  width="2" height="34" fill="#2a2e2d"/>
+                        <rect x="38" y="7"  width="2" height="34" fill="#2a2e2d"/>
+                        <rect x="44" y="7"  width="2" height="34" fill="#2a2e2d"/>
+                        <rect x="50" y="7"  width="2" height="34" fill="#2a2e2d"/>
+                        <rect x="56" y="7"  width="2" height="34" fill="#2a2e2d"/>
+                        <rect x="62" y="7"  width="2" height="34" fill="#2a2e2d"/>
+                      </svg>
+                    </div>
+                    <div class="style-label">Стиль №7</div>
+                  </div>
+
+                  <div class="style-card" data-v="8" onclick="selectStyle(this,8)">
+                    <div class="style-check"></div>
+                    <div class="style-preview">
+                      <svg viewBox="0 0 80 48" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="1"  y="2"  width="5" height="44" fill="#2a2e2d"/>
+                        <rect x="74" y="2"  width="5" height="44" fill="#2a2e2d"/>
+                        <rect x="9"  y="5"  width="2" height="38" fill="#2a2e2d"/>
+                        <rect x="69" y="5"  width="2" height="38" fill="#2a2e2d"/>
+                        <rect x="9"  y="4"  width="62" height="3" fill="#2a2e2d"/>
+                        <rect x="9"  y="41" width="62" height="3" fill="#2a2e2d"/>
+                        <rect x="12" y="7"  width="5" height="34" fill="#2a2e2d"/>
+                        <rect x="20" y="7"  width="3" height="34" fill="#2a2e2d"/>
+                        <rect x="26" y="7"  width="5" height="34" fill="#2a2e2d"/>
+                        <rect x="34" y="7"  width="3" height="34" fill="#2a2e2d"/>
+                        <rect x="40" y="7"  width="5" height="34" fill="#2a2e2d"/>
+                        <rect x="48" y="7"  width="3" height="34" fill="#2a2e2d"/>
+                        <rect x="54" y="7"  width="5" height="34" fill="#2a2e2d"/>
+                        <rect x="62" y="7"  width="3" height="34" fill="#2a2e2d"/>
+                      </svg>
+                    </div>
+                    <div class="style-label">Стиль №8</div>
+                  </div>
+
+                </div><!-- .style-grid -->
+              </div><!-- .accord-body -->
+            </div><!-- #acc-standard -->
+
+            <!-- Індивідуальне замовлення -->
+            <div class="accord-item" id="acc-custom">
+              <div class="accord-head" onclick="selectAccord('custom')">
+                <div class="accord-radio"></div>
+                <span class="accord-label">Індивідуальне замовлення</span>
+                <span class="accord-chevron">
+                  <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 1.5L6 6.5L11 1.5" stroke="#3F4443" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              </div>
+            </div>
+
+            <!-- Поки не знаю -->
+            <div class="accord-item" id="acc-consult">
+              <div class="accord-head" onclick="selectAccord('consult')">
+                <div class="accord-radio"></div>
+                <span class="accord-label">Поки не знаю</span>
+              </div>
+            </div>
+
+          </div><!-- .accord-list -->
+        </div>
+        <div class="panel-nav">
+          <button class="btn-back" onclick="goStep(2)">НАЗАД</button>
+          <button class="btn-next" onclick="goStep(4)">ДАЛІ</button>
+        </div>
+      </div><!-- step-3 -->
+
+      <!-- ── Step 4: Колір ──────────────────────────────────────────── -->
+      <div class="step-content" id="step-4">
+        <div class="step-body">
+          <h2 class="panel-title">Який колір покриття?</h2>
+          <div class="color-grid" id="color-grid">
+
+            <div class="color-card" onclick="selectColor(this,'#204133','Зелений','RAL 6005')">
+              <div class="color-swatch" style="background:#204133"></div>
+              <div class="color-info">
+                <div class="color-name">Зелений</div>
+                <div class="color-ral">RAL 6005</div>
+              </div>
+              <div class="color-check"></div>
+            </div>
+
+            <div class="color-card" onclick="selectColor(this,'#393E42','Антрацит','RAL 7016')">
+              <div class="color-swatch" style="background:#393E42"></div>
+              <div class="color-info">
+                <div class="color-name">Антрацит</div>
+                <div class="color-ral">RAL 7016</div>
+              </div>
+              <div class="color-check"></div>
+            </div>
+
+            <div class="color-card" onclick="selectColor(this,'#41302A','Коричневий','RAL 8017')">
+              <div class="color-swatch" style="background:#41302A"></div>
+              <div class="color-info">
+                <div class="color-name">Коричневий</div>
+                <div class="color-ral">RAL 8017</div>
+              </div>
+              <div class="color-check"></div>
+            </div>
+
+            <div class="color-card selected" onclick="selectColor(this,'#0E0E10','Чорний','RAL 9005')">
+              <div class="color-swatch" style="background:#0E0E10"></div>
+              <div class="color-info">
+                <div class="color-name">Чорний</div>
+                <div class="color-ral">RAL 9005</div>
+              </div>
+              <div class="color-check"></div>
+            </div>
+
+          </div>
+        </div>
+        <div class="panel-nav">
+          <button class="btn-back" onclick="goStep(3)">НАЗАД</button>
+          <button class="btn-next" onclick="goStep(5)">ДАЛІ</button>
+        </div>
+      </div><!-- step-4 -->
+
+      <!-- ── Step 5: Контакти ─────────────────────────────────────── -->
+      <div class="step-content" id="step-5">
+        <div class="step-body">
+          <h2 class="panel-title">Ваші контакти та додаткові побажання</h2>
+          <div class="config-fields">
+            <div class="config-field">
+              <div class="config-field-box">
+                <div class="config-field-label">Ім'я</div>
+                <input class="config-field-input" type="text" placeholder="">
+              </div>
+            </div>
+            <div class="config-field">
+              <div class="config-field-box">
+                <div class="config-field-label">Номер телефону</div>
+                <input class="config-field-input" type="tel" placeholder="+38 123 456 78 90">
+              </div>
+            </div>
+            <div class="config-field">
+              <div class="config-field-box config-field-box--ta">
+                <div class="config-field-label">Довільний коментар до замовлення</div>
+                <textarea class="config-field-input" rows="4" style="resize:none"
+                  placeholder="Можна коротко описати об'єкт або вставити посилання на приклад, який подобається"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel-nav">
+          <button class="btn-back" onclick="goStep(4)">НАЗАД</button>
+          <button class="btn-next" onclick="submitForm()">ДАЛІ</button>
+        </div>
+      </div><!-- step-5 -->
+
+      <!-- ── Success screen ──────────────────────────────────────── -->
+      <div class="success-screen" id="success-screen">
+        <div class="success-icon">✓</div>
+        <div class="success-title">Заявку отримано!</div>
+        <div class="success-desc">Наш менеджер зв'яжеться з вами найближчим часом з детальним розрахунком.</div>
+        <button class="btn-restart" onclick="restartForm()">← НАЛАШТУВАТИ ЩЕ РАЗ</button>
+      </div>
+
+    </div><!-- .panel -->
+  </div><!-- .main -->
+</div><!-- #app -->
+
+<!-- ─── FOOTER ───────────────────────────────────────────────────── -->
+<footer class="site-footer" id="site-footer">
+  <div class="ftr-inner">
+    <div class="ftr-copy">
+      <span class="ftr-copy-brand">YantosWire</span>
+      <span class="ftr-copy-text">© <span class="ftr-year"></span> Усі права захищені</span>
+    </div>
+    <div class="ftr-links">
+      <a href="#" class="ftr-link">Договір оферти</a>
+      <a href="#" class="ftr-link">Політика конфіденційності</a>
+    </div>
+    <div class="ftr-credit">
+      <span class="ftr-credit-text">Хто створив сайт?</span>
+      <a href="https://proekcia.com" target="_blank" rel="noopener noreferrer" class="ftr-credit-logo">
+        <img src="assets/images/Proekcia_logo.svg" alt="Proekcia" width="114" height="24" loading="lazy">
+      </a>
+    </div>
+  </div>
+</footer>
+
+<!-- ─── SCRIPTS ──────────────────────────────────────────────────── -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/RGBELoader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/DRACOLoader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/utils/BufferGeometryUtils.js"></script>
+<script src="js/config.js"></script>
+<script src="js/scene.js"></script>
+<script src="js/fence-builder.js"></script>
+<script src="js/camera.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/main.js"></script>
+<script src="js/wipe-headings.js"></script>
+<script>
+  document.querySelectorAll('.ftr-year').forEach(el => el.textContent = new Date().getFullYear());
+</script>
+
+</body>
+</html>

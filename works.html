@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Наші роботи — YantosWire</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/works.css">
+</head>
+<body>
+
+<!-- ─── HEADER ───────────────────────────────────────────────── -->
+<header class="site-header hdr-theme-light" id="site-header">
+  <a class="hdr-logo" href="index.html">
+    <span class="hdr-logo-imgs">
+      <img src="YantosWire_logo.svg" class="hdr-logo-img hdr-logo-img--dark" alt="YantosWire">
+      <img src="YantosWire_logo_light.svg" class="hdr-logo-img hdr-logo-img--light" alt="YantosWire">
+    </span>
+    <div class="hdr-logo-sep"></div>
+    <span class="hdr-logo-tagline">Виробник<br>металевої<br>продукції</span>
+  </a>
+  <nav class="hdr-nav">
+    <a href="index.html#app">Конфігуратор</a>
+    <a href="about.html">Про завод</a>
+    <a href="works.html" class="hdr-nav--active">Наші роботи</a>
+    <a href="contacts.html">Контакти</a>
+  </nav>
+  <div class="hdr-right">
+    <a href="tel:+380673323521" class="hdr-phone-btn">+380 67 332 35 21</a>
+    <button class="hdr-cta hdr-cta--works">Зворотній дзвінок</button>
+  </div>
+</header>
+
+<!-- ─── PORTFOLIO CAROUSEL ───────────────────────────────────── -->
+<main class="pf-main" id="pf-main">
+  <section class="pf-section" id="pf-section" data-hdr-theme="light">
+
+    <div class="pf-sticky">
+      <div class="pf-track-wrap" id="pf-track-wrap">
+        <div class="pf-track" id="pf-track">
+
+          <!-- Card 1 -->
+          <div class="pf-card">
+            <div class="pf-card__img">
+              <img src="assets/images/9a53a307a4fb8770ea8ba05f15acba753523ab96.jpg"
+                   alt="Портфоліо YantosWire" loading="lazy">
+            </div>
+          </div>
+
+          <!-- Card 2 — featured -->
+          <div class="pf-card pf-card--featured">
+            <div class="pf-card__img">
+              <img src="assets/images/71115d7597cae348345b523d2c72b60675d7d516.jpg"
+                   alt="Невеликий опис до фото або відео" loading="lazy">
+            </div>
+            <p class="pf-card__cap">Невеликий опис до фото або<br>відео на дві строки</p>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="pf-card">
+            <div class="pf-card__img">
+              <img src="assets/images/bcd101c5a1ec167f1c0d9e916695db0f4316ea55.jpg"
+                   alt="Паркан тип A" loading="lazy">
+            </div>
+            <p class="pf-card__cap">Паркан тип A</p>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="pf-card">
+            <div class="pf-card__img">
+              <img src="assets/images/1c901e042006c40a467a6c5973d3c89705d90fdb.jpg"
+                   alt="Паркан тип B" loading="lazy">
+            </div>
+            <p class="pf-card__cap">Паркан тип B</p>
+          </div>
+
+          <!-- Card 5 -->
+          <div class="pf-card">
+            <div class="pf-card__img">
+              <img src="assets/images/4baa01ae241ff1ac7575242627b20dd2204911a1.jpg"
+                   alt="Ворота типу В" loading="lazy">
+            </div>
+            <p class="pf-card__cap">Ворота типу В</p>
+          </div>
+
+          <!-- Card 6 -->
+          <div class="pf-card">
+            <div class="pf-card__img">
+              <img src="assets/images/frame_1430103747_2x.webp"
+                   alt="Хвіртка" loading="lazy">
+            </div>
+            <p class="pf-card__cap">Хвіртка</p>
+          </div>
+
+        </div><!-- .pf-track -->
+      </div><!-- .pf-track-wrap -->
+    </div><!-- .pf-sticky -->
+
+  </section>
+</main>
+
+<!-- ─── LIGHTBOX ──────────────────────────────────────────────── -->
+<div class="pf-lightbox" id="pf-lightbox">
+  <button class="pf-lightbox__close" id="pf-lb-close" aria-label="Закрити">✕</button>
+  <img id="pf-lb-img" src="" alt="">
+</div>
+
+<!-- ─── FOOTER ───────────────────────────────────────────────── -->
+<footer class="site-footer">
+  <div class="ftr-inner">
+    <div class="ftr-copy">
+      <span class="ftr-copy-brand">YantosWire</span>
+      <span class="ftr-copy-text">© <span class="ftr-year"></span> Усі права захищені</span>
+    </div>
+    <div class="ftr-links">
+      <a href="#" class="ftr-link">Договір оферти</a>
+      <a href="#" class="ftr-link">Політика конфіденційності</a>
+    </div>
+    <div class="ftr-credit">
+      <span class="ftr-credit-text">Хто створив сайт?</span>
+      <a href="https://proekcia.com" target="_blank" rel="noopener noreferrer" class="ftr-credit-logo">
+        <img src="assets/images/Proekcia_logo.svg" alt="Proekcia" width="114" height="24" loading="lazy">
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* ── Авто-рік ───────────────────────────────────────────────── */
+  document.querySelectorAll('.ftr-year').forEach(el => el.textContent = new Date().getFullYear());
+
+  /* ── Infinite velocity carousel ────────────────────────────── */
+  const trackWrap = document.getElementById('pf-track-wrap');
+  const track     = document.getElementById('pf-track');
+  const origCards = Array.from(track.querySelectorAll('.pf-card'));
+
+  /* Клонуємо картки для безкінечного лупу */
+  origCards.forEach(c => track.appendChild(c.cloneNode(true)));
+  const allCards = Array.from(track.querySelectorAll('.pf-card'));
+
+  /* Ширина одного сету (відстань між card[0] і першим клоном) */
+  let setW = 0;
+  function measureSet() {
+    setW = allCards[origCards.length].offsetLeft - allCards[0].offsetLeft;
+  }
+  requestAnimationFrame(measureSet);
+  window.addEventListener('resize', measureSet, { passive: true });
+
+  let posX     = 0;
+  let velX     = 0;
+  let rotNow   = 0;
+  let rotTarget = 0;
+
+  let FRICTION   = 0.86;
+  let ROT_FACTOR = 0.5;
+  let MAX_ROT    = 45;
+  let ROT_LERP   = 0.3;
+  let WHEEL_MULT = 0.25;
+  let WHEEL_CAP  = 145;
+  let VEL_CAP    = 45;
+
+  /* Скидаємо hover-стан при скролі */
+  function clearHover() {
+    track.classList.remove('has-hover');
+    allCards.forEach(c => c.classList.remove('is-hovered'));
+  }
+
+  /* Wheel */
+  window.addEventListener('wheel', e => {
+    e.preventDefault();
+    clearHover();
+    const raw = e.deltaY !== 0 ? e.deltaY : e.deltaX;
+    const d   = Math.sign(raw) * Math.min(Math.abs(raw), WHEEL_CAP);
+    velX -= d * WHEEL_MULT;
+    velX  = Math.max(-VEL_CAP, Math.min(VEL_CAP, velX));
+  }, { passive: false });
+
+  /* Drag */
+  let dragOn = false, dragPrev = 0;
+  document.getElementById('pf-main').addEventListener('mousedown', e => {
+    dragOn = true; dragPrev = e.clientX;
+    clearHover();
+  });
+  window.addEventListener('mousemove', e => {
+    if (!dragOn) return;
+    velX += (e.clientX - dragPrev) * 0.45;
+    dragPrev = e.clientX;
+  });
+  window.addEventListener('mouseup', () => { dragOn = false; });
+
+  /* Touch */
+  let tPrev = 0;
+  window.addEventListener('touchstart', e => { tPrev = e.touches[0].clientX; }, { passive: true });
+  window.addEventListener('touchmove',  e => {
+    velX += (e.touches[0].clientX - tPrev) * 0.7;
+    tPrev = e.touches[0].clientX;
+  }, { passive: true });
+
+  function tick() {
+    posX += velX;
+    velX *= FRICTION;
+    if (Math.abs(velX) < 0.04) velX = 0;
+
+    /* Безкінечний луп */
+    if (setW > 0) {
+      if (posX <= -setW) posX += setW;
+      if (posX >  0)     posX -= setW;
+    }
+
+    rotTarget = Math.max(-MAX_ROT, Math.min(MAX_ROT, velX * ROT_FACTOR));
+    rotNow   += (rotTarget - rotNow) * ROT_LERP;
+
+    trackWrap.style.transform = `translateX(${posX}px)`;
+    allCards.forEach(c => {
+      c.style.transform = `perspective(1400px) rotateY(${rotNow}deg)`;
+    });
+
+    requestAnimationFrame(tick);
+  }
+
+  tick();
+
+  /* ── Hover dim effect ────────────────────────────────────────── */
+  allCards.forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      track.classList.add('has-hover');
+      card.classList.add('is-hovered');
+    });
+    card.addEventListener('mouseleave', () => {
+      track.classList.remove('has-hover');
+      card.classList.remove('is-hovered');
+    });
+  });
+
+  /* ── Lightbox ───────────────────────────────────────────────── */
+  const lightbox  = document.getElementById('pf-lightbox');
+  const lbImg     = document.getElementById('pf-lb-img');
+  const lbClose   = document.getElementById('pf-lb-close');
+
+  function openLightbox(src, alt) {
+    lbImg.src = src;
+    lbImg.alt = alt || '';
+    lightbox.classList.add('active');
+  }
+  function closeLightbox() {
+    lightbox.classList.remove('active');
+    lbImg.src = '';
+  }
+
+  /* Делегуємо кліки на track (покриває оригінали + клони) */
+  track.addEventListener('click', e => {
+    const img = e.target.closest('.pf-card__img')?.querySelector('img');
+    if (!img) return;
+    openLightbox(img.src, img.alt);
+  });
+
+  lbClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', e => {
+    if (e.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+</script>
+
+</body>
+</html>

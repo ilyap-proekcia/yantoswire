@@ -1,0 +1,749 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&display=swap');
+
+/* ─── BASE OVERRIDES (scrollable page) ───────────────────────── */
+html, body {
+  height: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: var(--graphite);
+}
+
+/* ─── HEADER OVERRIDES ───────────────────────────────────────── */
+
+/* ─── FOOTER OVERRIDES (скасовуємо fixed/opacity:0 від конфігуратора) ── */
+.site-footer {
+  position: relative;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+
+/* Callback button — sandstone bg + graphite text */
+.hdr-cta--about {
+  background: var(--sandstone);
+  color: var(--graphite);
+}
+.hdr-cta--about:hover {
+  opacity: 0.88;
+}
+
+/* ─── ABOUT MAIN ─────────────────────────────────────────────── */
+.about-main {
+  position: relative;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   HERO
+   Design: 1920 × 943px
+   Formula: px / 1920 * 100 = vw
+   ═══════════════════════════════════════════════════════════════ */
+.about-hero {
+  position: relative;
+  height: 100vh;
+  min-height: 560px;
+  background: var(--graphite);
+  overflow: hidden;
+}
+
+/* Закриває subpixel-витік відео по правому краю */
+.about-hero::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--graphite);
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* ── Wave SVG: пропорции 1038:950, высота = 100vh, прижат к правому краю ── */
+/* Ширина = 100vh × (1038/950) = 109.263vh — всегда сохраняет форму волн */
+.about-hero-waves {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 109.263vh; /* = 1038/950 * 100vh — пропорциональная ширина */
+  fill: var(--graphite);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ── Видео: начинается ровно там где левый край SVG ── */
+/* left = 100vw - 109.263vh (= правый край - ширина SVG) */
+.about-hero-media {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: calc(100vw - 109.263vh);
+}
+
+.about-hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Top fade: graphite → transparent (top ~25% of section) */
+.about-hero-vid-fade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, var(--graphite) -5.39%, rgba(63, 68, 67, 0) 24.58%);
+  pointer-events: none;
+}
+
+/* ── Content: left column ── */
+.about-hero-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 54vw; /* covers left half + slight overlap before waves start */
+  padding-left: clamp(20px, 3.125vw, 60px); /* 60/1920 */
+  display: flex;
+  flex-direction: column;
+  z-index: 3;
+}
+
+/* Title: top=203px @ 1920, font-size=80px, weight=800, width=885px */
+.about-hero-title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: clamp(32px, 4.167vw, 80px); /* 80/1920 */
+  line-height: 120%;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: var(--sandstone);
+  max-width: clamp(300px, 46.094vw, 885px); /* 885/1920 */
+  margin-top: clamp(100px, 10.573vw, 203px); /* 203/1920 – title top from section */
+}
+
+/* Stats row: bottom offset=143px @ 1920 */
+.about-hero-stats {
+  margin-top: auto;
+  padding-bottom: clamp(40px, 7.448vw, 143px); /* 143/1920 */
+  display: flex;
+  gap: clamp(16px, 1.667vw, 32px); /* 32/1920 */
+}
+
+/* Single stat item: width=180px @ 1920 */
+.about-stat {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 0.833vw, 16px); /* 16/1920 */
+  width: clamp(100px, 9.375vw, 180px); /* 180/1920 */
+  flex-shrink: 0;
+}
+
+/* "01" / "02" / "03" */
+.about-stat-num {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: clamp(10px, 0.833vw, 16px); /* 16/1920 */
+  line-height: 120%;
+  letter-spacing: -0.04em;
+  color: var(--sandstone);
+}
+
+/* Stat text area with top border */
+.about-stat-body {
+  border-top: 1px solid rgba(255, 255, 255, 0.6);
+  padding-top: clamp(12px, 1.25vw, 24px); /* 24/1920 */
+}
+
+/* Stat label text */
+.about-stat-text {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: clamp(13px, 1.25vw, 24px); /* 24/1920 */
+  line-height: 120%;
+  letter-spacing: -0.02em;
+  color: var(--white);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BLOCK 2: PRODUCTION
+   Design: 1920 × 860px
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─── BLOCK 2 ANIMATION ──────────────────────────────────────── */
+
+/* Фаза 1: текст з'являється, місця під бейджі немає */
+.about-products.visible .prod-text {
+  opacity: 1;
+}
+
+/* Фаза 2: місце під бейдж плавно відкривається */
+.about-products.visible .prod-badge-wrap {
+  width: clamp(44px, 5.208vw, 100px);
+}
+
+/* Фаза 3: бейджик виїжджає зліва направо */
+.prod-badge {
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.7s cubic-bezier(0.4, 0, 0.2, 1) 1.6s;
+}
+.about-products.visible .prod-badge {
+  clip-path: inset(0 0% 0 0);
+}
+
+/* Тегляйн останній */
+.prod-tagline {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1) 2.4s,
+              transform 0.7s cubic-bezier(0.4, 0, 0.2, 1) 2.4s;
+}
+.about-products.visible .prod-tagline {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.about-products {
+  background: var(--porcelain); /* #EEEEEE */
+  padding: clamp(60px, 8.333vw, 160px) clamp(20px, 3.125vw, 60px);
+}
+
+.prod-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(40px, 5.938vw, 114px); /* 114/1920 — gap between text and tagline */
+}
+
+/* ── Main text ── */
+.prod-text {
+  opacity: 0;
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: clamp(24px, 3.333vw, 64px); /* 64/1920 */
+  line-height: 160%;
+  text-align: center;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: var(--graphite);
+  max-width: clamp(300px, 73.646vw, 1414px); /* 1414/1920 */
+}
+
+/* ── Inline image badge ── */
+
+/* Badge wrap: починає з нульової ширини, потім відкривається */
+.prod-badge-wrap {
+  display: inline-block;
+  vertical-align: middle;
+  width: 0;
+  height: clamp(44px, 5.208vw, 100px);
+  background: var(--graphite);
+  position: relative;
+  flex-shrink: 0;
+  overflow: hidden;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.7s;
+}
+
+/* Badge: абсолютно позиційований поверх */
+.prod-badge {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.prod-badge img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ── Bottom tagline ── */
+.prod-tagline {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(4px, 0.417vw, 8px); /* 8/1920 */
+}
+
+/* Wave icon above tagline */
+.prod-tagline-icon {
+  width: clamp(40px, 4.375vw, 84px);  /* 84/1920 */
+  height: auto;
+  display: block;
+}
+
+.prod-tagline-text {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: clamp(12px, 1.042vw, 20px); /* 20/1920 */
+  line-height: 140%;
+  text-align: center;
+  letter-spacing: -0.04em;
+  color: var(--graphite);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BLOCK 3: STATS
+   Design: 1920 × 1797px
+   Formula: px / 1920 * 100 = vw
+   ═══════════════════════════════════════════════════════════════ */
+
+.about-stats {
+  position: relative;
+  height: clamp(600px, 93.594vw, 1797px); /* 1797/1920 */
+  background: var(--sandstone);
+  overflow: hidden;
+}
+
+/* Хвиляста текстура: 1920×914, зверху */
+.stats-waves-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: clamp(300px, 47.604vw, 914px); /* 914/1920 */
+  object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ── Картка (базова) ── */
+.stats-card {
+  position: absolute;
+  width: clamp(120px, 16.667vw, 320px);   /* 320/1920 */
+  height: clamp(160px, 21.875vw, 420px);  /* 420/1920 */
+}
+
+/* Стат-картка */
+.stats-card--stat {
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: clamp(16px, 2.072vw, 39.79px)   /* top:    39.79/1920 */
+           0
+           clamp(16px, 2.158vw, 41.44px)   /* bottom: 41.44/1920 */
+           clamp(20px, 2.489vw, 47.79px);  /* left:   47.79/1920 */
+}
+
+/* Фото-картка */
+.stats-card--photo {
+  overflow: hidden;
+}
+.stats-card--photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Число */
+.stats-num {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: clamp(32px, 4.167vw, 80px); /* 80/1920 */
+  line-height: 80%;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: var(--graphite);
+}
+
+/* Підпис */
+.stats-label {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: clamp(10px, 1.036vw, 20px); /* 19.89/1920 */
+  line-height: 120%;
+  letter-spacing: -0.04em;
+  color: var(--graphite);
+}
+
+/* Великий слоган */
+.stats-slogan {
+  position: absolute;
+  left: 54.479vw;    /* 1046/1920 */
+  top: 46.508vw;     /* 892.97/1920 */
+  width: 42.344vw;   /* 813/1920 */
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: clamp(40px, 5.861vw, 113px); /* 112.526/1920 */
+  line-height: 120%;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: var(--graphite);
+}
+
+/* ── Позиції карток ── */
+/* Колонки: 60 / 553 / 1046 / 1539 */
+/* Рядки:   298 / 799 / 1299          */
+
+.stats-c1r1 { left: 3.125vw;  top: 15.521vw; } /* 60/1920  298/1920 */
+.stats-c3r1 { left: 54.479vw; top: 15.521vw; } /* 1046     298      */
+.stats-c4r1 { left: 80.156vw; top: 15.521vw; } /* 1539     298      */
+.stats-c1r2 { left: 3.125vw;  top: 41.615vw; } /* 60       799      */
+.stats-c2r2 { left: 28.802vw; top: 41.615vw; } /* 553      799      */
+.stats-c2r3 { left: 28.802vw; top: 67.656vw; } /* 553      1299     */
+.stats-c3r3 { left: 54.479vw; top: 67.656vw; } /* 1046     1299     */
+.stats-c4r3 { left: 80.156vw; top: 67.656vw; } /* 1539     1299     */
+
+/* ── Анімація: рядок за рядком ── */
+.stats-card,
+.stats-slogan {
+  opacity: 0;
+  transform: translateY(clamp(12px, 1.25vw, 24px));
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.about-stats.visible .row-1 {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0s;
+}
+.about-stats.visible .row-2 {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.35s;
+}
+.about-stats.visible .row-3 {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.7s;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BLOCK 4: CONFIGURATOR CTA
+   Design: 1920 × 700px
+   Formula: px / 1920 * 100 = vw
+   ═══════════════════════════════════════════════════════════════ */
+
+.about-configurator {
+  position: relative;
+  height: clamp(300px, 36.458vw, 700px); /* 700/1920 */
+  background: var(--sandstone);
+  overflow: hidden;
+}
+
+/* Біла картка-фон */
+.conf-card {
+  position: absolute;
+  left: 3.125vw;           /* 60/1920 */
+  top: 3.073vw;            /* 59/1920 */
+  width: 93.75vw;          /* 1800/1920 */
+  height: 30.313vw;        /* 582/1920 */
+  background: #fff;
+}
+
+/* Заголовок */
+.conf-title {
+  position: absolute;
+  left: 5.625vw;           /* 108/1920 = 60+48 */
+  top: 5.573vw;            /* 107/1920 = 59+48 */
+  width: 28.021vw;         /* 538/1920 */
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: clamp(24px, 3.333vw, 64px); /* 64/1920 */
+  line-height: 120%;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: var(--graphite);
+}
+
+/* Хвилі (ліво знизу) */
+.conf-waves {
+  position: absolute;
+  left: 5.625vw;           /* 108/1920 */
+  top: 27.760vw;           /* 533/1920 = 59+474 */
+  width: 12.344vw;         /* 237/1920 */
+  height: auto;
+  pointer-events: none;
+}
+
+/* Фото/відео огорожі (по центру) */
+.conf-image {
+  position: absolute;
+  left: 34.896vw;          /* 670/1920 = 960-290 */
+  top: 3.073vw;            /* 59/1920 */
+  width: 30.208vw;         /* 580/1920 */
+  height: 30.208vw;        /* 580/1920 */
+  overflow: hidden;
+}
+.conf-image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0) 91.78%, #fff 98.89%);
+  pointer-events: none;
+}
+.conf-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Інфо-рядок (іконка + текст) */
+.conf-info-row {
+  position: absolute;
+  left: 68.958vw;          /* 1324/1920 = 1860-488-48 */
+  top: 5.573vw;            /* 107/1920 */
+  width: 25.417vw;         /* 488/1920 */
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 1.198vw, 23px); /* 23/1920 */
+}
+
+.conf-info-icon {
+  flex-shrink: 0;
+  width: clamp(32px, 2.917vw, 56px);  /* 56/1920 */
+  height: clamp(32px, 2.917vw, 56px);
+  background: #895961;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.conf-info-icon img {
+  width: 43%;
+  height: 43%;
+}
+
+.conf-info-text {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: clamp(12px, 1.25vw, 24px); /* 24/1920 */
+  line-height: 120%;
+  letter-spacing: -0.04em;
+  color: var(--graphite);
+}
+
+/* Список параметрів */
+.conf-params {
+  position: absolute;
+  left: 69.375vw;          /* 1332/1920 = 60+1272 */
+  top: 11.771vw;           /* 226/1920 = 59+167 */
+  width: 25.052vw;         /* 481/1920 */
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.conf-param {
+  display: flex;
+  align-items: center;
+  gap: clamp(20px, 2.5vw, 48px);     /* 48/1920 */
+  padding-bottom: clamp(10px, 0.833vw, 16px); /* 16/1920 */
+  border-bottom: 1px solid rgba(63, 68, 67, 0.3);
+  margin-bottom: clamp(10px, 0.833vw, 16px);
+}
+.conf-param:last-child {
+  margin-bottom: 0;
+}
+
+.conf-param-num {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: clamp(9px, 0.625vw, 12px); /* 12/1920 */
+  line-height: 120%;
+  letter-spacing: -0.04em;
+  color: var(--graphite);
+  flex-shrink: 0;
+}
+
+.conf-param-name {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: clamp(12px, 0.938vw, 18px); /* 18/1920 */
+  line-height: 120%;
+  letter-spacing: -0.04em;
+  color: var(--graphite);
+}
+
+/* CTA кнопка */
+.conf-cta {
+  position: absolute;
+  left: 69.375vw;          /* 1332/1920 */
+  top: 26.563vw;           /* 510/1920 = 59+582-48-83 */
+  width: 25vw;             /* 480/1920 */
+  height: clamp(44px, 4.323vw, 83px); /* 83/1920 */
+  background: var(--graphite);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: clamp(11px, 0.833vw, 16px); /* 16/1920 */
+  line-height: 120%;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #fff;
+  letter-spacing: 0;
+  transition: opacity 0.2s ease;
+}
+.conf-cta:hover {
+  opacity: 0.85;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BLOCK 5: DELIVERY
+   Design: 1920 × 805px
+   Formula: px / 1920 * 100 = vw
+   ═══════════════════════════════════════════════════════════════ */
+
+.about-delivery {
+  position: relative;
+  height: clamp(400px, 41.927vw, 805px); /* 805/1920 */
+  background: var(--graphite);
+  overflow: hidden;
+}
+
+/* Title: left:120, top:80, 64px sandstone */
+.delivery-title {
+  position: absolute;
+  left: 6.25vw;    /* 120/1920 */
+  top: 4.167vw;    /* 80/1920 */
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: clamp(24px, 3.333vw, 64px); /* 64/1920 */
+  line-height: 120%;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: var(--sandstone);
+}
+
+/* Truck image: left:900, top:0, width:1020, height:800 */
+.dlv-truck {
+  position: absolute;
+  left: 46.875vw;  /* 900/1920 */
+  top: 0;
+  width: 53.125vw; /* 1020/1920 */
+  height: 41.667vw; /* 800/1920 */
+  max-height: 100%;
+}
+.dlv-truck img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+/* Left gradient: graphite → transparent */
+.dlv-truck-fade-l {
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 25%;
+  background: linear-gradient(90deg, var(--graphite) 0%, rgba(63,68,67,0) 100%);
+  pointer-events: none;
+}
+/* Bottom gradient: transparent → graphite */
+.dlv-truck-fade-b {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 20%;
+  background: linear-gradient(180deg, rgba(63,68,67,0) 0%, var(--graphite) 100%);
+  pointer-events: none;
+}
+
+/* City rows */
+.delivery-row {
+  position: absolute;
+  left: 6.25vw;   /* 120/1920 */
+  display: flex;
+  align-items: center;
+  width: 34.479vw; /* = separator width 662/1920 */
+  overflow: hidden;
+}
+
+.delivery-row--1 { top: 15.521vw; } /* 298/1920 */
+.delivery-row--2 { top: 22.708vw; } /* 436/1920 */
+.delivery-row--3 { top: 31.198vw; } /* 599/1920 */
+
+/* Number */
+.dlv-num {
+  min-width: 1.458vw; /* 28/1920 = 148-120 */
+  flex-shrink: 0;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: clamp(9px, 0.625vw, 12px);
+  line-height: 120%;
+  letter-spacing: -0.04em;
+  color: var(--sandstone);
+}
+
+/* City name: left:148, 32px white bold */
+.dlv-city {
+  min-width: 19.531vw; /* 375/1920 = 523-148 */
+  flex-shrink: 0;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: clamp(16px, 1.667vw, 32px); /* 32/1920 */
+  line-height: 120%;
+  letter-spacing: -0.04em;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+/* Description: left:523, 18px sandstone */
+.dlv-desc {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: clamp(10px, 0.938vw, 18px); /* 18/1920 */
+  line-height: 120%;
+  letter-spacing: -0.04em;
+  color: var(--sandstone);
+}
+
+/* Separator lines: width:662, left:120 */
+.delivery-line {
+  position: absolute;
+  left: 6.25vw;    /* 120/1920 */
+  width: 34.479vw; /* 662/1920 */
+  height: 1px;
+  background: rgba(255, 255, 255, 0.2);
+}
+.delivery-line--1 { top: 19.792vw; } /* 380/1920 */
+.delivery-line--2 { top: 28.281vw; } /* 543/1920 */
+.delivery-line--3 { top: 36.719vw; } /* 705/1920 */
+
+/* ─── Animation ── */
+.delivery-row,
+.delivery-line {
+  opacity: 0;
+  transform: translateY(clamp(8px, 0.833vw, 16px));
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+/* delivery-title handled by wipe-headings.js */
+.delivery-title { opacity: 1; transform: none; transition: none; }
+.dlv-truck {
+  opacity: 0;
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
+}
+
+.about-delivery.visible .delivery-title {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0s;
+}
+.about-delivery.visible .dlv-truck {
+  opacity: 1;
+}
+.about-delivery.visible .delivery-row--1,
+.about-delivery.visible .delivery-line--1 {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.2s;
+}
+.about-delivery.visible .delivery-row--2,
+.about-delivery.visible .delivery-line--2 {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.4s;
+}
+.about-delivery.visible .delivery-row--3,
+.about-delivery.visible .delivery-line--3 {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.6s;
+}
