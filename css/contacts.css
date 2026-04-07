@@ -20,6 +20,9 @@ html, body {
   pointer-events: auto;
 }
 
+/* Hamburger: hidden on desktop */
+.hdr-burger { display: none; }
+
 /* Callback button — sandstone (same as about.html) */
 .hdr-cta--contacts {
   background: var(--sandstone);
@@ -27,4 +30,104 @@ html, body {
 }
 .hdr-cta--contacts:hover {
   opacity: 0.88;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE (≤600px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+
+  /* ── Footer: скасовуємо display:none з styles.css ── */
+  .site-footer { display: block !important; }
+
+  /* ── Header ── */
+  .hdr-nav, .hdr-phone-btn, .hdr-cta--contacts { display: none !important; }
+  .hdr-burger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 9.23vw;
+    height: 9.23vw;
+    background: var(--marsala);
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  /* ── Contacts block ── */
+  .about-contacts {
+    height: 272.56vw;          /* 1063/390 */
+  }
+
+  .contacts-title {
+    left:      5.13vw;         /* 20/390 */
+    top:       20.51vw;        /* 80/390 */
+    font-size: 15.23vw;        /* 59.4/390 */
+  }
+
+  .contacts-info {
+    left: 5.13vw;              /* 20/390 */
+    top:  43.59vw;             /* 170/390 */
+  }
+  .contacts-info a {
+    font-size:   6.15vw;       /* 24/390 */
+    line-height: 103%;
+  }
+
+  .contacts-card {
+    left:   2.82vw;            /* 11/390 */
+    top:    87.95vw;           /* 343/390 */
+    width:  94.36vw;           /* 368/390 */
+    height: 174.36vw;          /* 680/390 */
+  }
+
+  .contacts-pattern {
+    left:   0;
+    top:    107.18vw;          /* 418/390 від картки */
+    width:  100%;
+    height: 67.18vw;           /* 262/390 */
+  }
+
+  .contacts-tagline {
+    left:      4.62vw;         /* 18/390 від картки */
+    top:       8.21vw;         /* 32/390 від картки */
+    font-size: 6.15vw;         /* 24/390 */
+  }
+
+  .contacts-form {
+    left:  4.62vw;             /* 18/390 від картки */
+    top:   29.23vw;            /* 114/390 від картки */
+    width: 85.13vw;            /* 332/390 */
+  }
+
+  .contacts-fields {
+    gap:           2.05vw;     /* 8/390 */
+    margin-bottom: 0;
+  }
+
+  .contacts-field {
+    height: 16.41vw;           /* 64/390 */
+  }
+
+  .contacts-field-label {
+    font-size: 3.08vw;         /* 12/390 */
+  }
+
+  .contacts-field-input {
+    font-size:   4.10vw;       /* 16/390 */
+    padding-top: 8.72vw;       /* 34/390 */
+  }
+
+  .contacts-submit {
+    height:        17.18vw;    /* 67/390 */
+    border-radius: 0;
+    font-size:     4.10vw;     /* 16/390 */
+    margin-top:    5.13vw;     /* 20/390 */
+    margin-bottom: 1.03vw;
+  }
+
+  .contacts-privacy {
+    font-size: 3.08vw;         /* 12/390 */
+  }
 }

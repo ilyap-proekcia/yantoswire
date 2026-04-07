@@ -31,6 +31,13 @@
     <a href="tel:+380673323521" class="hdr-phone-btn">+380 67 332 35 21</a>
     <button class="hdr-cta hdr-cta--about">Зворотній дзвінок</button>
   </div>
+  <button class="hdr-burger" aria-label="Меню">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="3" y="6" width="18" height="2" fill="white"/>
+      <rect x="3" y="11" width="18" height="2" fill="white"/>
+      <rect x="3" y="16" width="18" height="2" fill="white"/>
+    </svg>
+  </button>
 </header>
 
 <!-- ─── MAIN ──────────────────────────────────────────────────────── -->
@@ -55,6 +62,11 @@
          xmlns="http://www.w3.org/2000/svg"
          aria-hidden="true">
       <path d="M282.342 0V89.7383C282.342 202.988 243.961 312.826 173.583 400.977C61.2599 541.673 7.82094e-06 716.983 0 897.738V0H282.342ZM1037 950H754.434C754.434 881.172 766.006 824.784 787.525 776.291C809.385 727.031 842.214 680.315 887.506 623.582C979.758 508.033 1032.11 365.444 1037 217.487V950ZM1037.38 194.7C1037.38 202.308 1037.25 209.905 1037 217.487V0H1037.38V194.7ZM685.125 0V164.665C685.125 292.974 641.639 417.418 561.903 517.29C462.965 641.221 401.879 758.906 401.879 931.823V950H0V949.997H292.509V897.738C292.509 784.488 330.89 674.648 401.268 586.493C513.594 445.799 574.854 270.492 574.854 89.7383V0H685.125ZM961.593 0V194.7C961.593 333.268 914.632 467.662 828.521 575.52L819.947 586.325C777.578 640.093 742.74 690.065 718.374 744.972C692.044 804.305 678.652 871.516 678.652 950H401.879L567.921 949.993L567.918 931.819C567.919 809.803 606.804 728.239 691.143 622.597C794.691 492.898 851.167 331.293 851.167 164.665V0H961.593Z" fill="#3F4443"/>
+    </svg>
+
+    <!-- Mobile wave mask (visible only on mobile) -->
+    <svg class="about-hero-waves-mob" viewBox="0 0 390 310" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M390 125.657C333.657 136.955 280.306 158.289 233.783 188.744C172.105 229.119 95.2177 251.433 15.5098 251.433H0V214.611H7.39453C92.9459 214.611 176.359 187.793 243.736 137.991C285.624 107.031 336.348 87.4143 390 81.415V125.657ZM390 227.922C345.068 239.69 302.676 258.831 265.193 284.682C251.542 294.097 237.149 302.551 222.154 310H47.9766C127.058 304.704 203.164 280.134 266.585 238.618C303.222 214.635 345.226 197.023 390 186.677V227.922ZM390 304.611C384.686 306.303 379.422 308.1 374.214 310H287.096C318.197 289.03 353.032 272.986 390 262.39V304.611ZM324.622 0C275.578 12.4966 229.307 34.1166 188.825 64.0371C137.878 101.695 73.8573 122.576 7.39453 122.576H0V87.2422C55.3362 84.2834 112.947 73.5774 165.289 35.25L167.614 33.5664C186.484 20.0646 207.548 8.77914 230.152 0H324.622Z" fill="#3F4443"/>
     </svg>
 
     <!-- Content: left side -->
@@ -92,9 +104,9 @@
 
       <p class="prod-text">
         ДРІТ&nbsp;<span class="prod-badge-wrap"><span class="prod-badge"><img src="assets/images/drit.webp" alt="Дріт" loading="lazy"></span></span>,
-        ЦВЯХИ&nbsp;<span class="prod-badge-wrap"><span class="prod-badge"><img src="assets/images/tsvyah.webp" alt="Цвяхи" loading="lazy"></span></span>,
-        КРІПЛЕННЯ&nbsp;<span class="prod-badge-wrap"><span class="prod-badge"><img src="assets/images/kriplenya.webp" alt="Кріплення" loading="lazy"></span></span>,<br>
-        СІТКА&nbsp;<span class="prod-badge-wrap"><span class="prod-badge"><img src="assets/images/sitka.webp" alt="Сітка" loading="lazy"></span></span>,
+        ЦВЯХИ&nbsp;<span class="prod-badge-wrap"><span class="prod-badge"><img src="assets/images/tsvyah.webp" alt="Цвяхи" loading="lazy"></span></span>,<br class="mob-br">
+        КРІПЛЕННЯ&nbsp;<span class="prod-badge-wrap"><span class="prod-badge"><img src="assets/images/kriplenya.webp" alt="Кріплення" loading="lazy"></span></span>,<br class="desk-br">
+        СІТКА&nbsp;<span class="prod-badge-wrap"><span class="prod-badge"><img src="assets/images/sitka.webp" alt="Сітка" loading="lazy"></span></span>,<br class="mob-br">
         ОГОРОЖА&nbsp;<span class="prod-badge-wrap"><span class="prod-badge"><img src="assets/images/ogoroja.webp" alt="Огорожа" loading="lazy"></span></span>&nbsp;— ВСЕ ЦЕ<br>
         ВЛАСНЕ ВИРОБНИЦТВО.
       </p>
@@ -133,7 +145,7 @@
       <span class="stats-num">03</span>
       <span class="stats-label">заводи в Україні</span>
     </div>
-    <p class="stats-slogan row-2">Зміцнюємо<br>світ разом</p>
+    <p class="stats-slogan row-2 js-wipe-heading">Зміцнюємо світ разом</p>
 
     <!-- Рядок 3 -->
     <div class="stats-card stats-card--photo row-3 stats-c2r3">
@@ -154,7 +166,7 @@
 
     <div class="conf-card"></div>
 
-    <h2 class="conf-title">Яку огорожу<br>бажаєте?</h2>
+    <h2 class="conf-title">Яку огорожу бажаєте?</h2>
     <img class="conf-waves" src="assets/images/waves_block4.svg" alt="" aria-hidden="true">
 
     <div class="conf-image">
@@ -170,9 +182,9 @@
 
     <ul class="conf-params">
       <li class="conf-param"><span class="conf-param-num">01</span><span class="conf-param-name">Розмір</span></li>
-      <li class="conf-param"><span class="conf-param-num">04</span><span class="conf-param-name">Комплектацію</span></li>
-      <li class="conf-param"><span class="conf-param-num">02</span><span class="conf-param-name">Колір</span></li>
-      <li class="conf-param"><span class="conf-param-num">03</span><span class="conf-param-name">Стиль</span></li>
+      <li class="conf-param"><span class="conf-param-num">02</span><span class="conf-param-name">Комплектацію</span></li>
+      <li class="conf-param"><span class="conf-param-num">03</span><span class="conf-param-name">Колір</span></li>
+      <li class="conf-param"><span class="conf-param-num">04</span><span class="conf-param-name">Стиль</span></li>
     </ul>
 
     <a href="index.html#app" class="conf-cta">Підібрати варіант</a>
@@ -182,7 +194,7 @@
   <!-- ═══ BLOCK 5: DELIVERY ════════════════════════════════════ -->
   <section class="about-delivery" data-hdr-theme="light">
 
-    <h2 class="delivery-title">ДОСТАВЛЯЄМО<br>ПО ВСІЙ КРАЇНІ</h2>
+    <h2 class="delivery-title">ДОСТАВЛЯЄМО ПО&nbsp;ВСІЙ КРАЇНІ</h2>
 
     <div class="dlv-truck">
       <img src="assets/images/delivery_car.webp" alt="Доставка по Україні" loading="lazy">
@@ -193,21 +205,21 @@
     <div class="delivery-row delivery-row--1">
       <span class="dlv-num">01</span>
       <span class="dlv-city">Бровари</span>
-      <span class="dlv-desc">Головний завод та склад готової продукції</span>
+      <span class="dlv-desc">Головний завод. Доставка по центру та сходу України</span>
     </div>
     <div class="delivery-line delivery-line--1"></div>
 
     <div class="delivery-row delivery-row--2">
       <span class="dlv-num">02</span>
       <span class="dlv-city">Тернопіль</span>
-      <span class="dlv-desc">Виробничий майданчик і регіональний склад</span>
+      <span class="dlv-desc">Виробництво для заходу. Логістика без переплат для Галичини та Волині</span>
     </div>
     <div class="delivery-line delivery-line--2"></div>
 
     <div class="delivery-row delivery-row--3">
       <span class="dlv-num">03</span>
       <span class="dlv-city">Заліщики</span>
-      <span class="dlv-desc">Завод металевих виробів повного циклу</span>
+      <span class="dlv-desc">Більше потужностей — менше очікування на великі замовлення.</span>
     </div>
     <div class="delivery-line delivery-line--3"></div>
 
@@ -219,7 +231,10 @@
     <h2 class="contacts-title">КОНТАКТИ</h2>
 
     <div class="contacts-card">
-      <img class="contacts-pattern" src="assets/images/pattern_contact.svg" alt="" aria-hidden="true" loading="lazy">
+      <picture>
+        <source media="(max-width: 600px)" srcset="assets/images/Mob/pattern_contact_mob.svg">
+        <img class="contacts-pattern" src="assets/images/pattern_contact.svg" alt="" aria-hidden="true" loading="lazy">
+      </picture>
 
       <p class="contacts-tagline">Зв'яжіться<br>з нами</p>
 

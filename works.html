@@ -31,6 +31,13 @@
     <a href="tel:+380673323521" class="hdr-phone-btn">+380 67 332 35 21</a>
     <button class="hdr-cta hdr-cta--works">Зворотній дзвінок</button>
   </div>
+  <button class="hdr-burger" aria-label="Меню">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="3" y="6" width="18" height="2" fill="white"/>
+      <rect x="3" y="11" width="18" height="2" fill="white"/>
+      <rect x="3" y="16" width="18" height="2" fill="white"/>
+    </svg>
+  </button>
 </header>
 
 <!-- ─── PORTFOLIO CAROUSEL ───────────────────────────────────── -->
@@ -153,13 +160,15 @@
   let rotNow   = 0;
   let rotTarget = 0;
 
-  let FRICTION   = 0.86;
-  let ROT_FACTOR = 0.5;
-  let MAX_ROT    = 45;
-  let ROT_LERP   = 0.3;
-  let WHEEL_MULT = 0.25;
-  let WHEEL_CAP  = 145;
-  let VEL_CAP    = 45;
+  let FRICTION    = 0.86;
+  let ROT_FACTOR  = 0.5;
+  let MAX_ROT     = 45;
+  let ROT_LERP    = 0.3;
+  let WHEEL_MULT  = 0.25;
+  let WHEEL_CAP   = 145;
+  let VEL_CAP     = 45;
+  const IS_MOBILE = window.matchMedia('(max-width: 600px)').matches;
+  const TOUCH_MULT = IS_MOBILE ? 0.63 : 0.7; /* моб: 0.7 × 0.9 = 0.63 */
 
   /* Скидаємо hover-стан при скролі */
   function clearHover() {
@@ -194,7 +203,7 @@
   let tPrev = 0;
   window.addEventListener('touchstart', e => { tPrev = e.touches[0].clientX; }, { passive: true });
   window.addEventListener('touchmove',  e => {
-    velX += (e.touches[0].clientX - tPrev) * 0.7;
+    velX += (e.touches[0].clientX - tPrev) * TOUCH_MULT;
     tPrev = e.touches[0].clientX;
   }, { passive: true });
 

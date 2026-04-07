@@ -18,6 +18,12 @@ html, body {
 }
 
 
+/* Hamburger: hidden on desktop */
+.hdr-burger { display: none; }
+
+/* Mobile wave: hidden on desktop */
+.about-hero-waves-mob { display: none; }
+
 /* Callback button — sandstone bg + graphite text */
 .hdr-cta--about {
   background: var(--sandstone);
@@ -202,6 +208,10 @@ html, body {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* Переноси: mob-br — тільки мобілка, desk-br — тільки десктоп */
+br.mob-br  { display: none; }
+br.desk-br { display: inline; }
 
 .about-products {
   background: var(--porcelain); /* #EEEEEE */
@@ -550,6 +560,7 @@ html, body {
   letter-spacing: -0.04em;
   color: var(--graphite);
   flex-shrink: 0;
+  width: clamp(18px, 1.25vw, 24px); /* фіксована ширина — вирівнює імена */
 }
 
 .conf-param-name {
@@ -611,6 +622,7 @@ html, body {
   letter-spacing: -0.04em;
   text-transform: uppercase;
   color: var(--sandstone);
+  max-width: clamp(200px, 36vw, 692px); /* примусовий перенос на 2 рядки */
 }
 
 /* Truck image: left:900, top:0, width:1020, height:800 */
@@ -746,4 +758,478 @@ html, body {
   opacity: 1;
   transform: translateY(0);
   transition-delay: 0.6s;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   АДАПТАЦІЯ — ПЛАНШЕТ 601px – 1024px
+   Логіка: як ПК (хвилі праворуч, відео збоку), лише бургер
+   ═══════════════════════════════════════════════════════════════ */
+@media (min-width: 601px) and (max-width: 1024px) {
+
+  /* ── Header ── */
+  .hdr-nav, .hdr-phone-btn, .hdr-cta--about { display: none; }
+  .hdr-burger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: clamp(36px, 4.297vw, 44px);
+    height: clamp(36px, 4.297vw, 44px);
+    background: var(--marsala);
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  /* ── Hero: той самий макет що ПК (хвилі + відео праворуч) ── */
+  .about-hero-waves-mob { display: none; }
+
+  /* Розміри під планшет */
+  .about-hero-title {
+    font-size: clamp(32px, 5.859vw, 60px);
+    max-width: 58vw;
+    margin-top: clamp(60px, 7.813vw, 80px);
+  }
+
+  .about-hero-stats { gap: clamp(12px, 1.953vw, 20px); }
+
+  .about-stat { width: clamp(80px, 9.766vw, 100px); }
+
+  .about-stat-num  { font-size: clamp(10px, 1.172vw, 12px); }
+  .about-stat-text { font-size: clamp(12px, 1.563vw, 16px); }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   АДАПТАЦІЯ — МОБІЛКА ≤ 600px
+   Формула: макет 390×746px → vw = px/390*100, svh = px/746*100
+   Відео: висота = min(79.49vw, 44svh)
+   Висота секції: контент задає висоту (min-height 100svh), росте якщо треба
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+
+  /* ── Footer: скасовуємо display:none з styles.css ── */
+  .site-footer { display: block !important; }
+
+  /* ── Header ── */
+  .hdr-phone-btn { display: none !important; }
+  .hdr-cta--about { display: none !important; }
+
+  /* ── Hero section: висота від контенту, але мінімум весь екран ── */
+  .about-hero {
+    min-height: 100svh;
+    height: auto;
+    display: block; /* без flex — контент у нормальному потоці */
+    overflow: hidden;
+  }
+
+  /* Прибираємо 2px декоративну смужку справа */
+  .about-hero::after { content: none !important; }
+
+  .about-hero-waves { display: none; }
+
+  /* Відео: фіксовано знизу секції, 100vw = точно на весь вьюпорт */
+  .about-hero-media {
+    position: absolute;
+    top: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    right: auto;
+    bottom: 0;
+    width: 100vw;
+    height: min(79.49vw, 44svh);
+  }
+
+  /* Мобільний SVG inline — preserveAspectRatio=none гарантує розтягнення */
+  .about-hero-waves-mob {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100vw;
+    height: min(79.49vw, 44svh);
+    pointer-events: none;
+    z-index: 2;
+    overflow: visible;
+  }
+
+  /* ── Контент: нормальний потік, мінімум 100svh → секція росте ── */
+  .about-hero-content {
+    position: relative;
+    z-index: 3;
+    /* скидаємо десктопний absolute */
+    left: auto; right: auto; top: auto; bottom: auto;
+    width: auto;
+    /* мінімум повний екран → stats завжди в нижній половині */
+    min-height: 100svh;
+    /* відступ знизу резервує місце під відео */
+    padding-top: 10svh;
+    padding-left: var(--pad-outer);
+    padding-right: var(--pad-outer);
+    padding-bottom: calc(min(79.49vw, 44svh) + 6vw);
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+  }
+
+  .about-hero-title {
+    font-size: 8.21vw;   /* 32/390 */
+    line-height: 120%;
+    letter-spacing: -0.04em;
+    max-width: 100%;
+    margin-top: 0;
+  }
+
+  /* ── Stats ── */
+  .about-hero-stats {
+    margin-top: 8.21vw;   /* 32/390 — фіксований відступ від заголовка */
+    padding-bottom: 0;
+    gap: 4.75vw;          /* 18.54/390 */
+  }
+
+  .about-stat {
+    flex: 1;
+    width: auto;
+    gap: 2.05vw;          /* 8/390 */
+  }
+
+  .about-stat-num {
+    font-size: 3.08vw;    /* 12/390 */
+    font-weight: 600;
+  }
+
+  .about-stat-body {
+    border-top: 0.15vw solid rgba(255, 255, 255, 0.6);
+    padding-top: 2.05vw;  /* 8/390 */
+  }
+
+  .about-stat-text {
+    font-size: 3.59vw;    /* 14/390 */
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+
+  /* ── Hamburger ── */
+  .hdr-burger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 9.23vw;        /* 36/390 */
+    height: 9.23vw;
+    background: var(--marsala);
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  /* ── Block 2: Виробництво ── */
+  br.mob-br  { display: inline; }
+  br.desk-br { display: none; }
+
+  /* ── Block 5: Delivery ── */
+  .about-delivery {
+    height: 209.97vw;         /* 819/390 */
+  }
+
+  /* Вантажівка: повна ширина зверху */
+  .dlv-truck {
+    left:   0;
+    top:    0;
+    width:  100vw;
+    height: 78.43vw;          /* 305.88/390 */
+  }
+
+  /* Мобільні градієнти: діагональний + лівий */
+  .delivery-truck-fade-l {
+    position: absolute;
+    top: 0; left: 0;
+    width:  100%;
+    height: 100%;
+    background:
+      linear-gradient(16.86deg, #3F4443 11.97%, rgba(63,68,67,0) 21.33%),
+      linear-gradient(87.97deg, #3F4443 3.47%,  rgba(85,92,91,0) 24.3%);
+    pointer-events: none;
+  }
+  .delivery-truck-fade-b { display: none; }
+  .dlv-truck { overflow: hidden; }
+
+  /* Заголовок */
+  .delivery-title {
+    left:      5.13vw;        /* 20/390 */
+    top:       78.46vw;       /* 306/390 */
+    font-size: 8.21vw;        /* 32/390 */
+    max-width: 85.13vw;       /* 332/390 */
+  }
+
+  /* Ряди міст: wrap щоб опис йшов нижче назви */
+  .delivery-row {
+    left:      5.13vw;        /* 20/390 */
+    width:     89.74vw;       /* 350/390 */
+    flex-wrap: wrap;
+    overflow:  visible;
+  }
+  .delivery-row--1 { top: 106.15vw; } /* 414/390 */
+  .delivery-row--2 { top: 140.26vw; } /* 547/390 */
+  .delivery-row--3 { top: 174.36vw; } /* 680/390 */
+
+  .dlv-num {
+    min-width:    0;
+    width:        auto;
+    margin-right: 3.85vw;     /* 15/390 = gap між num і містом */
+    font-size:    3.08vw;     /* 12/390 */
+  }
+
+  .dlv-city {
+    min-width: 0;
+    flex:      1;
+    font-size: 6.15vw;        /* 24/390 */
+  }
+
+  .dlv-desc {
+    flex-basis:  100%;
+    width:       100%;
+    padding-left: 7.18vw;    /* 28/390 = num + gap, вирівнює з назвою міста */
+    margin-top:  2.05vw;     /* 8/390 */
+    font-size:   3.59vw;     /* 14/390 */
+    line-height: 140%;
+  }
+
+  /* Роздільники */
+  .delivery-line {
+    left:  5.13vw;            /* 20/390 */
+    width: 89.74vw;           /* 350/390 */
+  }
+  .delivery-line--1 { top: 132.05vw; } /* 515/390 */
+  .delivery-line--2 { top: 166.15vw; } /* 648/390 */
+  .delivery-line--3 { top: 200.26vw; } /* 781/390 */
+
+  /* ── Block 4: Configurator CTA ── */
+  .about-configurator {
+    height: 240.77vw;          /* 939/390 */
+  }
+
+  .conf-card {
+    left:   2.82vw;            /* 11/390 */
+    top:    12.82vw;           /* 50/390 */
+    width:  94.36vw;           /* 368/390 */
+    height: 215.13vw;          /* 839/390 */
+  }
+
+  .conf-title {
+    left:      7.44vw;         /* 29/390 = card 11 + offset 18 */
+    top:       21.03vw;        /* 82/390 = card 50 + title 32 */
+    width:     85.13vw;        /* 332/390 */
+    font-size: 8.21vw;         /* 32/390 */
+  }
+
+  .conf-waves {
+    left:  72.31vw;            /* 282/390 = card 11 + waves 271 */
+    top:   33.33vw;            /* 130/390 = card 50 + waves 80 */
+    width: 20.26vw;            /* 79/390 */
+  }
+
+  .conf-image {
+    left:   7.44vw;            /* 29/390 */
+    top:    40.26vw;           /* 157/390 = card 50 + image 107 */
+    width:  85.13vw;           /* 332/390 */
+    height: 85.13vw;           /* 332/390 */
+  }
+
+  .conf-info-row {
+    left:  7.44vw;             /* 29/390 */
+    top:   136.92vw;           /* 534/390 = card 50 + container 484 */
+    width: 85.13vw;            /* 332/390 */
+    gap:   3.08vw;             /* 12/390 */
+  }
+
+  .conf-info-icon {
+    width:  11.28vw;           /* 44/390 */
+    height: 11.28vw;
+  }
+
+  .conf-info-text {
+    font-size: 4.10vw;         /* 16/390 */
+  }
+
+  .conf-params {
+    left:  7.44vw;             /* 29/390 */
+    top:   156.41vw;           /* 610/390 = 534 + info 44 + gap 32 */
+    width: 85.13vw;            /* 332/390 */
+  }
+
+  .conf-param {
+    gap:            8.21vw;    /* 32/390 */
+    padding-bottom: 2.05vw;    /* 8/390 */
+    margin-bottom:  4.10vw;    /* 16/390 */
+  }
+
+  .conf-param-num  { font-size: 3.08vw; width: 6.15vw; }  /* 12/390, 24/390 */
+  .conf-param-name { font-size: 3.59vw; }  /* 14/390 */
+
+  .conf-cta {
+    left:      7.44vw;         /* 29/390 */
+    top:       202.56vw;       /* 790/390 = 534 + container 224 + gap 32 */
+    width:     85.13vw;        /* 332/390 */
+    height:    17.18vw;        /* 67/390 */
+    font-size: 4.10vw;         /* 16/390 */
+  }
+
+  /* ── Block 3: Stats ── */
+  .about-stats {
+    height: 440vw;          /* 1716/390 */
+  }
+
+  .stats-waves-bg {
+    height: 143.59vw;       /* 560/390 */
+  }
+
+  .stats-card {
+    width:  42.31vw;        /* 165/390 */
+    height: 54.87vw;        /* 214/390 */
+  }
+
+  .stats-card--stat {
+    padding: 4.10vw;        /* 16/390 */
+  }
+
+  .stats-num {
+    font-size: 10.26vw;     /* 40/390 */
+  }
+
+  .stats-label {
+    font-size: 3.08vw;      /* 12/390 */
+  }
+
+  /* Позиції карток — мобілка */
+  .stats-c1r1 { left: 5.13vw;  top: 18.21vw;  }  /* 20, 71   */
+  .stats-c3r1 { left: 52.56vw; top: 54.36vw;  }  /* 205, 212 */
+  .stats-c1r2 { left: 5.13vw;  top: 103.59vw; }  /* 20, 404  */
+  .stats-c4r1 { left: 52.56vw; top: 136.67vw; }  /* 205, 533 */
+  .stats-c2r2 { left: 5.13vw;  top: 245.90vw; }  /* 20, 959  */
+  .stats-c3r3 { left: 52.56vw; top: 282.05vw; }  /* 205, 1100 */
+  .stats-c2r3 { left: 5.13vw;  top: 331.28vw; }  /* 20, 1292 */
+  .stats-c4r3 { left: 52.56vw; top: 364.36vw; }  /* 205, 1421 */
+
+  /* Слоган */
+  .stats-slogan {
+    left:      5.13vw;      /* 20/390 */
+    top:       203.85vw;    /* 795/390 */
+    width:     89.74vw;     /* 350/390 */
+    font-size: 12.31vw;     /* 48/390 */
+    text-align: center;
+  }
+
+  .about-products {
+    padding: 20.51vw 5.13vw 25.64vw; /* 80/390 top, 20/390 sides, 100/390 bottom */
+  }
+
+  .prod-inner {
+    gap: 12.31vw; /* 48/390 — між текстом і tagline */
+  }
+
+  .prod-text {
+    font-size: 6.15vw;    /* 24/390 */
+    line-height: 180%;
+    max-width: 89.74vw;   /* 350/390 */
+  }
+
+  .prod-badge-wrap {
+    height: 10.26vw;      /* 40/390 */
+  }
+
+  .about-products.visible .prod-badge-wrap {
+    width: 10.26vw;       /* 40/390 */
+  }
+
+  .prod-tagline-icon {
+    width: 16.15vw;       /* 63/390 */
+  }
+
+  .prod-tagline-text {
+    font-size: 3.59vw;    /* 14/390 */
+  }
+
+  /* ── Block 6: Contacts ── */
+  .about-contacts {
+    height: 272.56vw;          /* 1063/390 */
+  }
+
+  /* Заголовок: більший та вище */
+  .contacts-title {
+    left:      5.13vw;         /* 20/390 */
+    top:       20.51vw;        /* 80/390 */
+    font-size: 15.23vw;        /* 59.4/390 */
+  }
+
+  /* Телефони / emails — над карткою */
+  .contacts-info {
+    left:      5.13vw;         /* 20/390 */
+    top:       43.59vw;        /* 170/390 */
+  }
+  .contacts-info a {
+    font-size: 6.15vw;         /* 24/390 */
+    line-height: 103%;
+  }
+
+  /* Пісочна картка */
+  .contacts-card {
+    left:   2.82vw;            /* 11/390 */
+    top:    87.95vw;           /* 343/390 */
+    width:  94.36vw;           /* 368/390 */
+    height: 174.36vw;          /* 680/390 */
+  }
+
+  /* Паттерн SVG: знизу картки, повернутий */
+  .contacts-pattern {
+    left:   0;
+    top:    107.18vw;          /* 418/390 від картки */
+    width:  100%;
+    height: 67.18vw;           /* 262/390 */
+  }
+
+  /* Tagline "Зв'яжіться з нами" */
+  .contacts-tagline {
+    left:      4.62vw;         /* 18/390 від картки */
+    top:       8.21vw;         /* 32/390 від картки */
+    font-size: 6.15vw;         /* 24/390 */
+  }
+
+  /* Форма */
+  .contacts-form {
+    left:  4.62vw;             /* 18/390 від картки */
+    top:   29.23vw;            /* 114/390 від картки */
+    width: 85.13vw;            /* 332/390 */
+  }
+
+  .contacts-fields {
+    gap:           2.05vw;     /* 8/390 */
+    margin-bottom: 0;
+  }
+
+  .contacts-field {
+    height: 16.41vw;           /* 64/390 */
+  }
+
+  .contacts-field-label {
+    font-size: 3.08vw;         /* 12/390 */
+  }
+
+  .contacts-field-input {
+    font-size:   4.10vw;       /* 16/390 */
+    padding-top: 8.72vw;       /* 34/390 — залишає місце для label */
+  }
+
+  /* Кнопка + privacy — окремий блок */
+  .contacts-submit {
+    height:        17.18vw;    /* 67/390 */
+    border-radius: 0;          /* прямокутна на мобілці */
+    font-size:     4.10vw;     /* 16/390 */
+    margin-top:    5.13vw;     /* 20/390 = відступ від полів */
+    margin-bottom: 1.03vw;     /* 4/390 */
+  }
+
+  .contacts-privacy {
+    font-size: 3.08vw;         /* 12/390 */
+  }
 }

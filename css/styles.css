@@ -683,13 +683,18 @@ h1{
 
 /* ─── WIPE-REVEAL (заголовки) ─────────────────────────────────── */
 h1.wipe-heading,
-h2.wipe-heading{animation:none!important;}
+h2.wipe-heading{
+  animation:none!important;
+  display:flex!important;flex-direction:column;align-items:flex-start;
+}
 
 .wipe-line{
-  display:block;width:fit-content;overflow:hidden;position:relative;line-height:inherit;
+  display:block;overflow:hidden;position:relative;
+  padding:0.18em 0.12em;
+  margin:-0.18em -0.12em;
 }
 .wipe-line-in{
-  display:block;transform:translateY(110%);
+  display:block;transform:translateY(140%);
 }
 
 /* Головний блок-завіса (sandstone) */
@@ -731,7 +736,7 @@ h2.wipe-heading{animation:none!important;}
   100%{transform:translateX(340%);}
 }
 @keyframes wipeTextUp{
-  from{transform:translateY(110%);}
+  from{transform:translateY(140%);}
   to  {transform:translateY(0);}
 }
 
@@ -921,7 +926,7 @@ h2.wipe-heading{animation:none!important;}
 .contacts-title {
   position: absolute;
   left: 3.385vw;  /* 65/1920 */
-  top: 8.490vw;   /* 163/1920 */
+  top: 6.49vw;
   font-family: 'Montserrat', sans-serif;
   font-weight: 800;
   font-size: clamp(60px, 15.663vw, 300.72px); /* 300.72/1920 */
@@ -1196,4 +1201,56 @@ h2.wipe-heading{animation:none!important;}
 .site-footer--sandstone .ftr-credit-logo img,
 .site-footer--porcelain .ftr-credit-logo img {
   filter: brightness(0);
+}
+
+/* ─── MOBILE FOOTER (about / contacts / works) ───────────────
+   position:relative на цих сторінках — футер у потоці, 130px  */
+@media (max-width: 600px) {
+  .site-footer {
+    height: 33.33vw;           /* 130/390 */
+  }
+
+  .ftr-inner {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 3.33vw;            /* 13/390 */
+    height: auto;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6.15vw;               /* 24/390 */
+  }
+
+  /* Рядок 1: YantosWire © рік */
+  .ftr-copy {
+    gap: 1.28vw;               /* 5/390 */
+  }
+  .ftr-copy-brand,
+  .ftr-copy-text {
+    font-size: 3.59vw;         /* 14/390 */
+    color: #fff;
+    white-space: nowrap;
+  }
+
+  /* Рядок 2: посилання */
+  .ftr-links {
+    gap: 6.15vw;               /* 24/390 */
+  }
+  .ftr-link {
+    font-size: 3.59vw;         /* 14/390 */
+    color: #fff;
+  }
+
+  /* Рядок 3: кредит */
+  .ftr-credit {
+    gap: 2.05vw;               /* 8/390 */
+  }
+  .ftr-credit-text {
+    font-size: 3.59vw;         /* 14/390 */
+    color: #fff;
+  }
+  .ftr-credit-logo img {
+    height: 6.15vw;            /* 24/390 */
+  }
 }

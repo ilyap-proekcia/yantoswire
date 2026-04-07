@@ -9,6 +9,8 @@ html, body {
 }
 
 /* ─── HEADER overrides ───────────────────────────────────────── */
+.hdr-burger { display: none; }
+
 .hdr-cta--works {
   background: var(--sandstone);
   color: var(--graphite);
@@ -149,3 +151,44 @@ html, body {
   padding: 0;
 }
 .pf-lightbox__close:hover { opacity: 1; }
+
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE (≤600px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+
+  /* ── Footer: прихований на мобілці ── */
+  .site-footer { display: none !important; }
+
+  /* ── Header ── */
+  .hdr-nav, .hdr-phone-btn, .hdr-cta--works { display: none !important; }
+  .hdr-burger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 9.23vw;
+    height: 9.23vw;
+    background: var(--marsala);
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  /* ── Карусель: картки -10%, менший gap і padding ── */
+  :root {
+    --pf-card-h: min(459px, calc(100dvh - var(--header-h) - 100px));
+    /* 510 * 0.9 = 459 — без футера, пропорції збережено */
+    --pf-gap: 12px;
+  }
+
+  .pf-track {
+    padding: 0 5.13vw;         /* 20/390 */
+  }
+
+  /* Caption завжди видимий на тач (немає hover) */
+  .pf-card__cap {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
