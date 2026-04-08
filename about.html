@@ -24,12 +24,12 @@
   <nav class="hdr-nav">
     <a href="index.html#app">Конфігуратор</a>
     <a href="about.html" class="hdr-nav--active">Про завод</a>
-    <a href="works.html">Наші роботи</a>
+    <a href="works.html">Фото робіт</a>
     <a href="contacts.html">Контакти</a>
   </nav>
   <div class="hdr-right">
     <a href="tel:+380673323521" class="hdr-phone-btn">+380 67 332 35 21</a>
-    <button class="hdr-cta hdr-cta--about">Зворотній дзвінок</button>
+    <button class="hdr-cta hdr-cta--about">Передзвонити вам?</button>
   </div>
   <button class="hdr-burger" aria-label="Меню">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -39,6 +39,41 @@
     </svg>
   </button>
 </header>
+
+<!-- ─── MOBILE MENU ──────────────────────────────────────────── -->
+<div id="mob-menu" aria-hidden="true" aria-label="Навігація">
+  <div class="mm-trigger" role="button" tabindex="0" aria-label="Відкрити меню">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="3" y="6"  width="18" height="2" fill="white"/>
+      <rect x="3" y="11" width="18" height="2" fill="white"/>
+      <rect x="3" y="16" width="18" height="2" fill="white"/>
+    </svg>
+  </div>
+  <div class="mm-content">
+    <div class="mm-head">
+      <a class="mm-logo" href="index.html">
+        <img src="YantosWire_logo_light.svg" class="mm-logo-img" alt="YantosWire">
+        <div class="mm-logo-sep"></div>
+        <span class="mm-logo-tag">Виробник<br>металевої<br>продукції</span>
+      </a>
+      <button class="mm-close" aria-label="Закрити меню">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 5L19 19M5 19L19 5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <nav class="mm-nav">
+      <a href="index.html#app"   class="mm-nav-item">Конфігуратор</a>
+      <a href="about.html"       class="mm-nav-item">Про завод</a>
+      <a href="works.html"       class="mm-nav-item">Фото робіт</a>
+      <a href="contacts.html"    class="mm-nav-item">Контакти</a>
+    </nav>
+    <div class="mm-cta">
+      <a href="tel:+380673323521" class="mm-phone">+380 67 332 35 21</a>
+      <button class="mm-callback">Передзвонити вам?</button>
+    </div>
+  </div>
+</div>
 
 <!-- ─── MAIN ──────────────────────────────────────────────────────── -->
 <main class="about-main">
@@ -399,6 +434,7 @@
   updateHdrTheme();
 </script>
 <script src="js/wipe-headings.js"></script>
+<script src="js/mob-menu.js"></script>
 
 </body>
 </html>

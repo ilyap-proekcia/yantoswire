@@ -91,6 +91,7 @@ body{font-family:'Inter',sans-serif;color:var(--text);}
 }
 .hdr-nav--active{opacity:0.55;pointer-events:none;}
 .hdr-burger{display:none;}
+#mob-menu{display:none;}
 
 /* ─── LIGHT THEME: хедер на тёмному фоні (graphite hero) ─── */
 .site-header.hdr-theme-light .hdr-logo-img--dark{opacity:0;}
@@ -927,6 +928,230 @@ h2.wipe-heading{
     line-height: 1.2;
     margin: 0;
     letter-spacing: -0.04em;
+  }
+
+  /* ── Mobile menu: hide original burger (only on pages that have #mob-menu) ─── */
+  body:has(#mob-menu) .hdr-burger { display: none !important; }
+  #mob-menu { display: block; }
+
+  /* ── #mob-menu container ──────────────────
+     Closed = marsala square at top-right (same position as hdr-burger)
+     Open   = large marsala panel
+  ─────────────────────────────────────────── */
+  #mob-menu {
+    position: fixed;
+    z-index: 800;
+    background: var(--marsala);
+    overflow: hidden;
+
+    /* ── Closed state: button ── */
+    top:    7px;
+    right:  16px;
+    width:  9.231vw;   /* = 36px at 390px, matches hdr-burger */
+    height: 9.231vw;
+
+    cursor: pointer;
+
+    transition:
+      top    0.48s cubic-bezier(0.16, 1, 0.3, 1),
+      right  0.48s cubic-bezier(0.16, 1, 0.3, 1),
+      width  0.48s cubic-bezier(0.16, 1, 0.3, 1),
+      height 0.52s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* ── Open state: full panel ── */
+  #mob-menu.mm-open {
+    top:    8px;
+    right:  8px;
+    width:  calc(100vw - 16px);
+    height: min(604px, calc(var(--dvh) * 85));
+    cursor: default;
+  }
+
+  /* ── Trigger icon ── */
+  .mm-trigger {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.18s ease;
+  }
+  #mob-menu.mm-open .mm-trigger {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* ── Panel content wrapper ── */
+  .mm-content {
+    position: absolute;
+    inset: 0;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    pointer-events: none;
+  }
+  #mob-menu.mm-content-visible .mm-content {
+    pointer-events: auto;
+  }
+
+  /* ── Head row ── */
+  .mm-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    height: 36px;
+  }
+  .mm-logo {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    text-decoration: none;
+  }
+  .mm-logo-img {
+    height: 33px;
+    width: auto;
+    display: block;
+  }
+  .mm-logo-sep {
+    width: 0;
+    height: 33px;
+    border-right: 0.7px solid rgba(195,173,139,0.5);
+    flex-shrink: 0;
+  }
+  .mm-logo-tag {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--sandstone);
+  }
+  .mm-close {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* ── Nav ── */
+  .mm-nav {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+  }
+  .mm-nav-item {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 32px;
+    line-height: 1.2;
+    text-transform: uppercase;
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+  }
+  .mm-nav-item:hover { opacity: 0.75; }
+
+  /* ── CTA block ── */
+  .mm-cta {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .mm-phone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 59px;
+    border: 1px solid #fff;
+    background: var(--marsala);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    text-transform: uppercase;
+    color: #fff;
+    text-decoration: none;
+    letter-spacing: 0;
+  }
+  .mm-callback {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 59px;
+    background: var(--graphite);
+    border: none;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    text-transform: uppercase;
+    color: #fff;
+    cursor: pointer;
+    letter-spacing: 0;
+    width: 100%;
+  }
+
+  /* ════════════════════════════════════════
+     STAGGER ANIMATIONS
+     Each element: opacity 0 + translateY(20px) → visible
+  ════════════════════════════════════════ */
+  .mm-logo,
+  .mm-close,
+  .mm-nav-item,
+  .mm-phone,
+  .mm-callback {
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity   0.38s ease,
+      transform 0.38s ease;
+  }
+
+  /* Opening stagger — each element gets its own delay */
+  #mob-menu.mm-content-visible .mm-logo {
+    opacity: 1; transform: none; transition-delay: 0ms;
+  }
+  #mob-menu.mm-content-visible .mm-close {
+    opacity: 1; transform: none; transition-delay: 60ms;
+  }
+  #mob-menu.mm-content-visible .mm-nav-item:nth-child(1) {
+    opacity: 1; transform: none; transition-delay: 130ms;
+  }
+  #mob-menu.mm-content-visible .mm-nav-item:nth-child(2) {
+    opacity: 1; transform: none; transition-delay: 210ms;
+  }
+  #mob-menu.mm-content-visible .mm-nav-item:nth-child(3) {
+    opacity: 1; transform: none; transition-delay: 290ms;
+  }
+  #mob-menu.mm-content-visible .mm-nav-item:nth-child(4) {
+    opacity: 1; transform: none; transition-delay: 370ms;
+  }
+  #mob-menu.mm-content-visible .mm-phone {
+    opacity: 1; transform: none; transition-delay: 450ms;
+  }
+  #mob-menu.mm-content-visible .mm-callback {
+    opacity: 1; transform: none; transition-delay: 510ms;
+  }
+
+  /* Closing — fast uniform fade-down (override delays) */
+  #mob-menu.mm-closing .mm-logo,
+  #mob-menu.mm-closing .mm-close,
+  #mob-menu.mm-closing .mm-nav-item,
+  #mob-menu.mm-closing .mm-phone,
+  #mob-menu.mm-closing .mm-callback {
+    opacity: 0;
+    transform: translateY(12px);
+    transition-delay: 0ms !important;
+    transition-duration: 0.18s !important;
   }
 
   /* Mobile footer strip: pinned to bottom safe-area */
