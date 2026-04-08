@@ -11,8 +11,19 @@
  *   three.min.js → config.js → scene.js → fence-builder.js → camera.js → ui.js → main.js
  */
 
+// ─── iOS Safari --dvh fix ─────────────────────────────────────
+// vh units in iOS Safari include the browser chrome area.
+// We compute the real visual viewport height and expose it as --dvh
+// so CSS can use calc(var(--dvh) * N) instead of Nvh.
+function setDvh() {
+  const dvh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--dvh', `${dvh}px`);
+}
+setDvh();
+
 // ─── RESIZE ───────────────────────────────────────────────────
 function resize() {
+  setDvh();
   renderer.setSize(window.innerWidth, window.innerHeight);
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
@@ -36,6 +47,10 @@ resize();
 document.getElementById('btn-start').addEventListener('click', () => {
   if (appMode === 'config') return;
   appMode = 'config';
+
+  // Стоп карусель — убираем 3D-группы и строим конфигуратор
+  if (window.heroCarousel) heroCarousel.stop();
+  buildFence();
 
   // Шаг 1 (t=0): фото и текст уходят
   document.getElementById('hero-bg').classList.add('fade-out');
@@ -119,7 +134,7 @@ function animate() {
 }
 
 // ─── INIT ─────────────────────────────────────────────────────
-buildFence();
+heroCarousel.init();
 applyCamera();
 
 // Pre-warm shaders: compile both hero (no-fog) and config (fog) variants
@@ -142,6 +157,8 @@ animate();
 // При переході з about.html — одразу показуємо конфігуратор без анімації
 if (location.hash === '#app') {
   appMode = 'config';
+  if (window.heroCarousel) heroCarousel.stop();
+  buildFence();
   enterConfigMode();
 
   const _cfg = isMob ? CAM_CONFIG.config.mobile : CAM_CONFIG.config.desktop;

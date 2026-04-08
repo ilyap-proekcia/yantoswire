@@ -20,7 +20,7 @@
 <canvas id="main-canvas"></canvas>
 
 <!-- ─── SITE HEADER ─────────────────────────────────────────────── -->
-<header class="site-header about-header hdr-theme-light" id="site-header">
+<header class="site-header about-header" id="site-header">
   <a class="hdr-logo" href="index.html">
     <span class="hdr-logo-imgs">
       <img src="YantosWire_logo.svg" class="hdr-logo-img hdr-logo-img--dark" alt="YantosWire">
@@ -39,25 +39,62 @@
     <a href="tel:+380673323521" class="hdr-phone-btn">+380 67 332 35 21</a>
     <button class="hdr-cta hdr-cta--about">Зворотній дзвінок</button>
   </div>
+  <button class="hdr-burger" aria-label="Меню">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="3" y="6" width="18" height="2" fill="white"/>
+      <rect x="3" y="11" width="18" height="2" fill="white"/>
+      <rect x="3" y="16" width="18" height="2" fill="white"/>
+    </svg>
+  </button>
 </header>
 
 <!-- ─── HERO ────────────────────────────────────────────────────── -->
 <div id="hero">
-  <div class="hero-left">
-    <div class="hero-badge">профільна металева труба</div>
-    <h1>Красиві паркани з металу</h1>
-    <p class="hero-sub">8 стандартних рішень зі знижкою -15% або індивідуальне замовлення</p>
-    <div class="hero-features">
-      <div class="feat"><div class="feat-dot"></div><span>8 стандартних рішень</span></div>
-      <div class="feat"><div class="feat-dot"></div><span>Знижка -15%</span></div>
-      <div class="feat"><div class="feat-dot"></div><span>Доставка по Україні</span></div>
+  <h1>Паркани з профільної труби від виробника</h1>
+
+  <button class="hero-cta" id="btn-start">Обрати паркан</button>
+
+  <div class="hero-feats">
+    <!-- Figma order: Доставка → Знижка → Гарантія (mob/desk consistent) -->
+    <div class="hero-feat">
+      <div class="hero-feat-icon">
+        <svg width="32" height="24" viewBox="0 0 32 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="0" width="22" height="16" rx="1" fill="#C3AD8B"/>
+          <path d="M22 8H27.382C27.886 8 28.349 8.27 28.596 8.706L31.5 13.5V16H22V8Z" fill="#C3AD8B"/>
+          <circle cx="7.5" cy="20.5" r="3.5" fill="#C3AD8B"/>
+          <circle cx="25.5" cy="20.5" r="3.5" fill="#C3AD8B"/>
+        </svg>
+      </div>
+      <p>Доставка по<br>всій Україні</p>
     </div>
-    <div class="hero-cta-row">
-      <button class="btn-hero" id="btn-start">Перейти до підбору</button>
-      <p class="cta-hint">Пройдіть короткий підбір. У кінці залишиться лише надіслати запит на прорахунок.</p>
+    <div class="hero-feat">
+      <div class="hero-feat-icon hero-feat-icon--text"><span>-15%</span></div>
+      <p>Знижка на 8<br>стандартних варіантів</p>
+    </div>
+    <div class="hero-feat">
+      <div class="hero-feat-icon">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16 2L3 7.5V15.5C3 22.8 8.5 29.6 16 31C23.5 29.6 29 22.8 29 15.5V7.5L16 2Z" fill="#C3AD8B"/>
+          <path d="M11 16.5L14.5 20L21.5 13" stroke="#3F4443" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <p>Гарантія<br>12 місяців</p>
     </div>
   </div>
-  <div class="hero-3d-space"></div>
+
+  <!-- Mobile-only footer strip (hidden on desktop) -->
+  <div class="hero-mob-foot">
+    <div class="hero-mob-foot-l">
+      <span>YantosWire © <span class="ftr-year"></span></span>
+      <span>Усі права захищені</span>
+    </div>
+    <div class="hero-mob-foot-r">
+      <span>Хто створив сайт?</span>
+      <a href="https://proekcia.com" target="_blank" rel="noopener noreferrer">
+        <img src="assets/images/Proekcia_logo.svg" alt="Proekcia" width="76" height="16">
+      </a>
+    </div>
+  </div>
 </div>
 
 <!-- ─── CONFIGURATOR APP ─────────────────────────────────────────── -->
@@ -84,6 +121,34 @@
 
     <!-- Side panel -->
     <div class="panel">
+
+      <!-- ── Step bar ─────────────────────────────────────────────── -->
+      <div class="step-bar" id="step-bar">
+        <div class="step-bar__item is-active" data-step="0">
+          <span class="step-bar__num">01</span>
+          <span class="step-bar__label">Розмір</span>
+        </div>
+        <div class="step-bar__item" data-step="1">
+          <span class="step-bar__num">02</span>
+          <span class="step-bar__label">Комплектація</span>
+        </div>
+        <div class="step-bar__item" data-step="2">
+          <span class="step-bar__num">03</span>
+          <span class="step-bar__label">Доставка</span>
+        </div>
+        <div class="step-bar__item" data-step="3">
+          <span class="step-bar__num">04</span>
+          <span class="step-bar__label">Стиль</span>
+        </div>
+        <div class="step-bar__item" data-step="4">
+          <span class="step-bar__num">05</span>
+          <span class="step-bar__label">Колір</span>
+        </div>
+        <div class="step-bar__item" data-step="5">
+          <span class="step-bar__num">06</span>
+          <span class="step-bar__label">Контакти</span>
+        </div>
+      </div>
 
       <!-- ── Step 0: Розміри ──────────────────────────────────────── -->
       <div class="step-content active" id="step-0">
@@ -124,20 +189,7 @@
             <div class="pkg-card selected" data-v="fence" onclick="selectPkg(this,'fence')">
               <div class="pkg-check"></div>
               <div class="pkg-preview">
-                <svg viewBox="0 0 80 40" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="2"  y="4" width="3"  height="32" fill="#3F4443"/>
-                  <rect x="75" y="4" width="3"  height="32" fill="#3F4443"/>
-                  <rect x="2"  y="8" width="76" height="2"  fill="#3F4443"/>
-                  <rect x="2"  y="28" width="76" height="2" fill="#3F4443"/>
-                  <rect x="10" y="4" width="2" height="32" fill="#3F4443"/>
-                  <rect x="18" y="4" width="2" height="32" fill="#3F4443"/>
-                  <rect x="26" y="4" width="2" height="32" fill="#3F4443"/>
-                  <rect x="34" y="4" width="2" height="32" fill="#3F4443"/>
-                  <rect x="42" y="4" width="2" height="32" fill="#3F4443"/>
-                  <rect x="50" y="4" width="2" height="32" fill="#3F4443"/>
-                  <rect x="58" y="4" width="2" height="32" fill="#3F4443"/>
-                  <rect x="66" y="4" width="2" height="32" fill="#3F4443"/>
-                </svg>
+                <img src="assets/images/parkan_3x.webp" alt="Лише паркан" loading="lazy">
               </div>
               <div class="pkg-label">Лише паркан</div>
             </div>
@@ -145,25 +197,7 @@
             <div class="pkg-card" data-v="fence+gate-small" onclick="selectPkg(this,'fence+gate-small')">
               <div class="pkg-check"></div>
               <div class="pkg-preview">
-                <svg viewBox="0 0 80 40" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="2"  y="4" width="3" height="32" fill="#3F4443"/>
-                  <rect x="75" y="4" width="3" height="32" fill="#3F4443"/>
-                  <rect x="2"  y="8" width="26" height="2" fill="#3F4443"/>
-                  <rect x="2"  y="28" width="26" height="2" fill="#3F4443"/>
-                  <rect x="52" y="8" width="26" height="2" fill="#3F4443"/>
-                  <rect x="52" y="28" width="26" height="2" fill="#3F4443"/>
-                  <rect x="10" y="4" width="2" height="32" fill="#3F4443"/>
-                  <rect x="18" y="4" width="2" height="32" fill="#3F4443"/>
-                  <rect x="60" y="4" width="2" height="32" fill="#3F4443"/>
-                  <rect x="68" y="4" width="2" height="32" fill="#3F4443"/>
-                  <rect x="28" y="4" width="3" height="32" fill="#3F4443"/>
-                  <rect x="49" y="4" width="3" height="32" fill="#3F4443"/>
-                  <rect x="31" y="8" width="18" height="2" fill="#5B6770"/>
-                  <rect x="31" y="28" width="18" height="2" fill="#5B6770"/>
-                  <rect x="34" y="4" width="1.5" height="32" fill="#5B6770"/>
-                  <rect x="40" y="4" width="1.5" height="32" fill="#5B6770"/>
-                  <rect x="46" y="4" width="1.5" height="32" fill="#5B6770"/>
-                </svg>
+                <img src="assets/images/parkan_hvirtka_3x.webp" alt="Паркан + хвіртка" loading="lazy">
               </div>
               <div class="pkg-label">Паркан + хвіртка</div>
             </div>
@@ -171,27 +205,7 @@
             <div class="pkg-card" data-v="fence+gate" onclick="selectPkg(this,'fence+gate')">
               <div class="pkg-check"></div>
               <div class="pkg-preview">
-                <svg viewBox="0 0 80 40" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="2"  y="4" width="3" height="32" fill="#3F4443"/>
-                  <rect x="75" y="4" width="3" height="32" fill="#3F4443"/>
-                  <rect x="2"  y="8" width="20" height="2" fill="#3F4443"/>
-                  <rect x="2"  y="28" width="20" height="2" fill="#3F4443"/>
-                  <rect x="60" y="8" width="18" height="2" fill="#3F4443"/>
-                  <rect x="60" y="28" width="18" height="2" fill="#3F4443"/>
-                  <rect x="8"  y="4" width="2" height="32" fill="#3F4443"/>
-                  <rect x="14" y="4" width="2" height="32" fill="#3F4443"/>
-                  <rect x="64" y="4" width="2" height="32" fill="#3F4443"/>
-                  <rect x="70" y="4" width="2" height="32" fill="#3F4443"/>
-                  <rect x="22" y="4" width="3" height="32" fill="#3F4443"/>
-                  <rect x="55" y="4" width="3" height="32" fill="#3F4443"/>
-                  <rect x="25" y="8" width="30" height="2" fill="#5B6770"/>
-                  <rect x="25" y="20" width="30" height="2" fill="#5B6770"/>
-                  <rect x="25" y="28" width="30" height="2" fill="#5B6770"/>
-                  <rect x="29" y="4" width="2" height="32" fill="#5B6770"/>
-                  <rect x="36" y="4" width="2" height="32" fill="#5B6770"/>
-                  <rect x="43" y="4" width="2" height="32" fill="#5B6770"/>
-                  <rect x="50" y="4" width="2" height="32" fill="#5B6770"/>
-                </svg>
+                <img src="assets/images/parkan_vorota_3x.webp" alt="Паркан + ворота" loading="lazy">
               </div>
               <div class="pkg-label">Паркан + ворота</div>
             </div>
@@ -199,32 +213,7 @@
             <div class="pkg-card" data-v="fence+gate+small" onclick="selectPkg(this,'fence+gate+small')">
               <div class="pkg-check"></div>
               <div class="pkg-preview">
-                <svg viewBox="0 0 80 40" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="2"  y="4" width="2" height="32" fill="#3F4443"/>
-                  <rect x="78" y="4" width="2" height="32" fill="#3F4443"/>
-                  <rect x="2"  y="8" width="14" height="2" fill="#3F4443"/>
-                  <rect x="2"  y="28" width="14" height="2" fill="#3F4443"/>
-                  <rect x="66" y="8" width="14" height="2" fill="#3F4443"/>
-                  <rect x="66" y="28" width="14" height="2" fill="#3F4443"/>
-                  <rect x="6"  y="4" width="1.5" height="32" fill="#3F4443"/>
-                  <rect x="11" y="4" width="1.5" height="32" fill="#3F4443"/>
-                  <rect x="69" y="4" width="1.5" height="32" fill="#3F4443"/>
-                  <rect x="74" y="4" width="1.5" height="32" fill="#3F4443"/>
-                  <rect x="16" y="4" width="2" height="32" fill="#3F4443"/>
-                  <rect x="32" y="4" width="2" height="32" fill="#3F4443"/>
-                  <rect x="48" y="4" width="2" height="32" fill="#3F4443"/>
-                  <rect x="64" y="4" width="2" height="32" fill="#3F4443"/>
-                  <rect x="18" y="8" width="14" height="2" fill="#5B6770"/>
-                  <rect x="18" y="20" width="14" height="2" fill="#5B6770"/>
-                  <rect x="18" y="28" width="14" height="2" fill="#5B6770"/>
-                  <rect x="22" y="4" width="1.5" height="32" fill="#5B6770"/>
-                  <rect x="27" y="4" width="1.5" height="32" fill="#5B6770"/>
-                  <rect x="34" y="8" width="14" height="2" fill="#5B6770"/>
-                  <rect x="34" y="20" width="14" height="2" fill="#5B6770"/>
-                  <rect x="34" y="28" width="14" height="2" fill="#5B6770"/>
-                  <rect x="38" y="4" width="1.5" height="32" fill="#5B6770"/>
-                  <rect x="43" y="4" width="1.5" height="32" fill="#5B6770"/>
-                </svg>
+                <img src="assets/images/parkan_hvirtka_vorota_3x.webp" alt="Паркан + хвіртка + ворота" loading="lazy">
               </div>
               <div class="pkg-label">Паркан + хвіртка + ворота</div>
             </div>
@@ -622,7 +611,7 @@
 </div><!-- #app -->
 
 <!-- ─── FOOTER ───────────────────────────────────────────────────── -->
-<footer class="site-footer" id="site-footer">
+<footer class="site-footer site-footer--sandstone" id="site-footer">
   <div class="ftr-inner">
     <div class="ftr-copy">
       <span class="ftr-copy-brand">YantosWire</span>
@@ -650,10 +639,12 @@
 <script src="js/config.js"></script>
 <script src="js/scene.js"></script>
 <script src="js/fence-builder.js"></script>
+<script src="js/hero-carousel.js"></script>
 <script src="js/camera.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/main.js"></script>
 <script src="js/wipe-headings.js"></script>
+<script src="js/dev-panel.js"></script>
 <script>
   document.querySelectorAll('.ftr-year').forEach(el => el.textContent = new Date().getFullYear());
 </script>

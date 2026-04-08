@@ -25,10 +25,12 @@ const isMob = window.innerWidth <= 768;
 //
 const CAM_CONFIG = {
 
-  // ── Стартовая позиция (hero-экран) ──────────────────────────
+  // ── Стартовая позиция (hero-экран / orbital carousel) ───────
+  // phi < π/2 даёт вид немного сверху — видна орбитальная глубина (z-offset боковых)
+  // radius достаточно большой чтобы охватить все 3 забора
   hero: {
-    desktop: { theta: -0.17, phi: 1.52, radius:  3.2, cx: -2.7, cy: 1.0 },
-    mobile:  { theta: -0.15, phi: 1.56, radius:  4.1, cx: -1.65, cy: 1.75 },
+    desktop: { theta: 0, phi: 1.57, radius:  6.5, cx: 0, cy: 1.4 },
+    mobile:  { theta: 0, phi: 1.57, radius:  8.5, cx: 0, cy: 0.5 },
   },
 
   // ── Конечная позиция (конфигуратор) ─────────────────────────

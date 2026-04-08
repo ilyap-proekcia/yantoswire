@@ -10,7 +10,20 @@
  */
 
 // ─── STEP NAVIGATION ─────────────────────────────────────────
+const STEP_LABELS = ['Розмір', 'Комплектація', 'Доставка', 'Стиль', 'Колір', 'Контакти'];
+
+// Animation timings (ms)
+const SB_COLLAPSE = 210;
+const SB_EXPAND   = 250;
+const SB_LABEL    = 160;
+let _sbCleanup = null;
+
+function _sbClear(item) {
+  item.style.flex = item.style.width = item.style.background = item.style.transition = '';
+}
+
 function goStep(n) {
+  // ── Switch step content ──
   document.querySelectorAll('.step-content').forEach(el => el.classList.remove('active'));
   document.querySelectorAll('.sp-item').forEach((el, i) => {
     el.classList.remove('active', 'done');
@@ -19,6 +32,99 @@ function goStep(n) {
   });
   const target = document.getElementById('step-' + n);
   if (target) target.classList.add('active');
+
+  // ── Step bar ──
+  const items    = Array.from(document.querySelectorAll('.step-bar__item'));
+  const fromItem = items.find(i => i.classList.contains('is-active'));
+  const toItem   = items.find(i => parseInt(i.dataset.step, 10) === n);
+
+  // Abort previous animation
+  if (_sbCleanup) { _sbCleanup(); _sbCleanup = null; }
+
+  if (!fromItem || !toItem || fromItem === toItem) {
+    items.forEach(item => {
+      const s = parseInt(item.dataset.step, 10);
+      item.classList.toggle('is-active', s === n);
+      item.classList.toggle('is-done',   s < n);
+    });
+    return;
+  }
+
+  const fromLabel = fromItem.querySelector('.step-bar__label');
+  const toLabel   = toItem.querySelector('.step-bar__label');
+  const expandedW = fromItem.getBoundingClientRect().width;
+  const refItem   = items.find(i => i !== fromItem && i !== toItem);
+  const compactW  = refItem ? refItem.getBoundingClientRect().width : 48;
+
+  const timers = [];
+  _sbCleanup = () => {
+    timers.forEach(clearTimeout);
+    [fromItem, toItem].forEach(_sbClear);
+    [fromLabel, toLabel].forEach(l => { l.style.opacity = l.style.transition = ''; });
+    items.forEach(item => {
+      const s = parseInt(item.dataset.step, 10);
+      item.classList.toggle('is-active', s === n);
+      item.classList.toggle('is-done',   s < n);
+    });
+    _sbCleanup = null;
+  };
+
+  // ── PHASE 1: Collapse from-item ────────────────────────────
+  fromLabel.style.transition = 'none';
+  fromLabel.style.opacity    = '0';
+  fromItem.style.transition  = 'none';
+  fromItem.style.flex        = 'none';
+  fromItem.style.width       = expandedW + 'px';
+
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    const doneBg = n > parseInt(fromItem.dataset.step, 10) ? 'var(--sandstone)' : '#EEEEEE';
+    fromItem.style.transition = `width ${SB_COLLAPSE}ms cubic-bezier(0.4,0,0.2,1),`
+                               + `background ${SB_COLLAPSE}ms ease`;
+    fromItem.style.width      = compactW + 'px';
+    fromItem.style.background = doneBg;
+  }));
+
+  // ── PHASE 2: Expand to-item ────────────────────────────────
+  const t1 = setTimeout(() => {
+    // Update all class states
+    items.forEach(item => {
+      const s = parseInt(item.dataset.step, 10);
+      item.classList.remove('is-active', 'is-done');
+      if (s === n) item.classList.add('is-active');
+      else if (s < n) item.classList.add('is-done');
+      if (item !== toItem && item !== fromItem) _sbClear(item);
+    });
+    _sbClear(fromItem);
+    fromLabel.style.transition = fromLabel.style.opacity = '';
+
+    // Pin to-item at compact, hide label
+    toLabel.style.transition = 'none';
+    toLabel.style.opacity    = '0';
+    toItem.style.transition  = 'none';
+    toItem.style.flex        = 'none';
+    toItem.style.width       = compactW + 'px';
+
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      toItem.style.transition = `width ${SB_EXPAND}ms cubic-bezier(0.4,0,0.2,1)`;
+      toItem.style.width      = expandedW + 'px';
+    }));
+
+    // ── PHASE 3: Fade in label at ~55% of expand ───────────
+    const t2 = setTimeout(() => {
+      toLabel.style.transition = `opacity ${SB_LABEL}ms ease`;
+      toLabel.style.opacity    = '1';
+
+      // ── PHASE 4: Cleanup ───────────────────────────────────
+      const t3 = setTimeout(() => {
+        _sbClear(toItem);
+        toLabel.style.transition = toLabel.style.opacity = '';
+        _sbCleanup = null;
+      }, SB_LABEL + 30);
+      timers.push(t3);
+    }, Math.round(SB_EXPAND * 0.55));
+    timers.push(t2);
+  }, SB_COLLAPSE + 20);
+  timers.push(t1);
 }
 
 // ─── RADIO CARD SELECTION (list layout) ──────────────────────
