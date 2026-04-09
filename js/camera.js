@@ -36,8 +36,8 @@ const CAM_CONFIG = {
   // ── Конечная позиция (конфигуратор) ─────────────────────────
   // ↓ Меняй эти значения чтобы подобрать нужный ракурс
   config: {
-    desktop: { theta:  0.24, phi: 1.42, radius:  6.5, cx:  0.0, cy: 1.0 },
-    mobile:  { theta: -0.30, phi: 1.31, radius: 14.5, cx:  0.0, cy: 1.0 },
+    desktop: { theta:  0.24, phi: 1.42, radius:  6.5, cx:  0.0, cy: 1.0, cyOffset:  0.0 },
+    mobile:  { theta: -0.30, phi: 1.31, radius: 12.5, cx:  0.0, cy: 1.0, cyOffset: -0.5 },
   },
 
   // ── Длительность перехода hero → configurator (миллисекунды) ──
@@ -121,6 +121,25 @@ function updateCameraViewOffset() {
 
 function clearCameraViewOffset() {
   camera.clearViewOffset();
+}
+
+// ─── CONFIG CAMERA FIT ────────────────────────────────────────
+// Dev-panel adjustable offset (additive, controlled via _cfgCyOffset)
+let _cfgCyOffset = 0;
+
+// Call every time fence height changes (from buildFence / adjDim).
+// Centres look-at on the fence mid-height and gently zooms out for taller fences.
+function adjustCameraToFence() {
+  if (typeof appMode === 'undefined' || appMode !== 'config') return;
+  const H   = (typeof ST !== 'undefined') ? ST.height : 2.0;
+  const cfg = isMob ? CAM_CONFIG.config.mobile : CAM_CONFIG.config.desktop;
+  const dH  = Math.max(0, H - 2.0);
+  const kR  = isMob ? 1.5 : 0.8; // radius increase per metre above 2 m
+  CAM.tCx     = 0;
+  CAM.tCy     = H / 2 + (cfg.cyOffset || 0) + _cfgCyOffset;
+  CAM.tRadius = cfg.radius + dH * kR;
+  CAM.speed   = 0.08;
+  invalidate();
 }
 
 // Returns hero→config transition progress 0..1, or -1 when no transition is active

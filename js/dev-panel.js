@@ -125,6 +125,10 @@
   // ── defaults (mirror hero-carousel.js + camera.js values) ─────
   const isMob = window.innerWidth <= 768;
   const DEFAULTS = {
+    cfg: {
+      cyOffset: isMob ? -0.5 : 0,
+      radius:   isMob ? 12.5 : 6.5,
+    },
     cam: isMob ? {
       phi:    1.57,
       radius: 8.5,
@@ -156,6 +160,11 @@
   };
 
   // ── slider definitions ────────────────────────────────────────
+  const CFG_SLIDERS = [
+    { key:'cyOffset', label:'scene lift',  min:-2.0, max:2.0, step:0.05 },
+    { key:'radius',   label:'zoom out',    min:3,    max:22,  step:0.5  },
+  ];
+
   const CAM_SLIDERS = [
     { key:'phi',    label:'phi (vert)',   min:0.60,  max:1.57, step:0.01 },
     { key:'radius', label:'radius',       min:4,     max:25,   step:0.5  },
@@ -206,7 +215,8 @@
       <button id="dp-close" title="Close (or press \`)">✕</button>
     </div>
     <div id="dp-body">
-      ${_makeSection('CAMERA', CAM_SLIDERS, 'cam')}
+      ${_makeSection('CONFIG SCENE', CFG_SLIDERS, 'cfg')}
+      ${_makeSection('HERO CAMERA', CAM_SLIDERS, 'cam')}
       ${_makeSection('CAROUSEL', CAR_SLIDERS, 'carousel')}
       <div class="dp-actions">
         <button class="dp-btn dp-btn-copy"  id="dp-copy">Copy config</button>
@@ -238,6 +248,18 @@
   });
 
   // ── live update helpers ───────────────────────────────────────
+  function _cfgApply() {
+    if (typeof CAM === 'undefined') return;
+    const offset = parseFloat(document.getElementById('dp-cfg-cyOffset').value);
+    const r      = parseFloat(document.getElementById('dp-cfg-radius').value);
+    const H      = (typeof ST !== 'undefined') ? ST.height : 2.0;
+    if (typeof _cfgCyOffset !== 'undefined') _cfgCyOffset = offset;
+    CAM.tCy     = H / 2 + offset;
+    CAM.tRadius = r;
+    CAM.speed   = 0.12;
+    if (typeof invalidate === 'function') invalidate();
+  }
+
   function _camApply() {
     if (typeof CAM === 'undefined') return;
     CAM.tPhi    = parseFloat(document.getElementById('dp-cam-phi').value);
@@ -274,6 +296,7 @@
     });
   }
 
+  _bindSliders(CFG_SLIDERS, 'cfg', _cfgApply);
   _bindSliders(CAM_SLIDERS, 'cam', _camApply);
   _bindSliders(CAR_SLIDERS, 'carousel', _carApply);
 
@@ -319,6 +342,13 @@
 
   // ── reset to defaults ─────────────────────────────────────────
   document.getElementById('dp-reset').addEventListener('click', () => {
+    CFG_SLIDERS.forEach(s => {
+      const id  = `dp-cfg-${s.key}`;
+      const inp = document.getElementById(id);
+      const val = document.getElementById(`${id}-val`);
+      inp.value       = DEFAULTS.cfg[s.key];
+      val.textContent = _fmt(DEFAULTS.cfg[s.key], s.step);
+    });
     CAM_SLIDERS.forEach(s => {
       const id  = `dp-cam-${s.key}`;
       const inp = document.getElementById(id);
@@ -333,6 +363,7 @@
       inp.value       = DEFAULTS.carousel[s.key];
       val.textContent = _fmt(DEFAULTS.carousel[s.key], s.step);
     });
+    _cfgApply();
     _camApply();
     _carApply();
   });
@@ -357,16 +388,22 @@
   // ── sync sliders to live values on first open ─────────────────
   //    (in case camera was already moved before panel was shown)
   function _syncFromLive() {
+    const set = (id, v, step) => {
+      const inp = document.getElementById(id);
+      const lbl = document.getElementById(`${id}-val`);
+      if (inp) { inp.value = v; lbl.textContent = _fmt(v, step); }
+    };
     if (typeof CAM !== 'undefined') {
-      const set = (id, v, step) => {
-        const inp = document.getElementById(id);
-        const lbl = document.getElementById(`${id}-val`);
-        if (inp) { inp.value = v; lbl.textContent = _fmt(v, step); }
-      };
       set('dp-cam-phi',    CAM.phi,    0.01);
       set('dp-cam-radius', CAM.radius, 0.5);
       set('dp-cam-theta',  CAM.theta,  0.01);
       set('dp-cam-cy',     CAM.cy,     0.1);
+    }
+    if (typeof _cfgCyOffset !== 'undefined') {
+      set('dp-cfg-cyOffset', _cfgCyOffset, 0.05);
+    }
+    if (typeof CAM !== 'undefined') {
+      set('dp-cfg-radius', CAM.radius, 0.5);
     }
   }
 

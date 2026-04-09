@@ -60,7 +60,7 @@ document.getElementById('btn-start').addEventListener('click', () => {
   const _cfg = isMob ? CAM_CONFIG.config.mobile : CAM_CONFIG.config.desktop;
   // Use fence-centre as lookAt; setViewOffset handles visual centering in the panel
   const _fH  = (typeof ST !== 'undefined' && ST.height) ? ST.height : 2.0;
-  const dest = Object.assign({}, _cfg, { cx: 0, cy: _fH / 2 });
+  const dest = Object.assign({}, _cfg, { cx: 0, cy: _fH / 2 + (_cfg.cyOffset || 0) });
   startCameraTransition(dest);
 
   // Шаг 2 (t=800): фото исчезло → восстанавливаем фон сцены
@@ -167,7 +167,7 @@ if (location.hash === '#app') {
   CAM.phi    = CAM.tPhi    = _cfg.phi;
   CAM.radius = CAM.tRadius = _cfg.radius;
   CAM.cx     = CAM.tCx     = 0;
-  CAM.cy     = CAM.tCy     = _fH / 2;
+  CAM.cy     = CAM.tCy     = _fH / 2 + (_cfg.cyOffset || 0);
   updateCameraViewOffset();
   applyCamera();
   invalidate();

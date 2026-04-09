@@ -180,15 +180,15 @@
         </div>
         <div class="step-bar__item" data-step="2">
           <span class="step-bar__num">03</span>
-          <span class="step-bar__label">Доставка</span>
+          <span class="step-bar__label">Стиль</span>
         </div>
         <div class="step-bar__item" data-step="3">
           <span class="step-bar__num">04</span>
-          <span class="step-bar__label">Стиль</span>
+          <span class="step-bar__label">Колір</span>
         </div>
         <div class="step-bar__item" data-step="4">
           <span class="step-bar__num">05</span>
-          <span class="step-bar__label">Колір</span>
+          <span class="step-bar__label">Доставка</span>
         </div>
         <div class="step-bar__item" data-step="5">
           <span class="step-bar__num">06</span>
@@ -272,62 +272,19 @@
         </div>
       </div>
 
-      <!-- ── Step 2: Доставка ─────────────────────────────────────── -->
-      <div class="step-content" id="step-2">
-        <div class="step-body">
-          <h2 class="panel-title">Куди потрібна доставка?</h2>
-          <div class="delivery-banner">
-            <div class="delivery-text">
-              <strong>Доставка по<br>всій Україні</strong>
-            </div>
-            <div class="delivery-truck">
-              <svg viewBox="0 0 130 75" xmlns="http://www.w3.org/2000/svg" fill="none">
-                <!-- Cab -->
-                <rect x="78" y="28" width="42" height="32" rx="3" fill="#895961"/>
-                <rect x="80" y="30" width="22" height="16" rx="2" fill="#C3AD8B" opacity="0.4"/>
-                <!-- Body -->
-                <rect x="4" y="18" width="78" height="42" rx="3" fill="#6b4c52"/>
-                <!-- YantosWire text area -->
-                <rect x="8" y="22" width="70" height="10" rx="1" fill="#C3AD8B" opacity="0.25"/>
-                <!-- Wheels -->
-                <circle cx="22" cy="63" r="9" fill="#3F4443"/>
-                <circle cx="22" cy="63" r="5" fill="#8a8680"/>
-                <circle cx="58" cy="63" r="9" fill="#3F4443"/>
-                <circle cx="58" cy="63" r="5" fill="#8a8680"/>
-                <circle cx="104" cy="63" r="9" fill="#3F4443"/>
-                <circle cx="104" cy="63" r="5" fill="#8a8680"/>
-              </svg>
-            </div>
-          </div>
-          <div class="config-fields">
-            <div class="config-field">
-              <div class="config-field-box">
-                <div class="config-field-label">Місто / населений пункт</div>
-                <input class="config-field-input" id="f-city" type="text" placeholder="">
-              </div>
-            </div>
-            <div class="config-field">
-              <div class="config-field-box">
-                <div class="config-field-label">Адреса</div>
-                <input class="config-field-input" id="f-address" type="text" placeholder="">
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="panel-nav">
-          <button class="btn-back" onclick="goStep(1)">НАЗАД</button>
-          <button class="btn-next" onclick="goStep(3)">ДАЛІ</button>
-        </div>
-      </div>
-
-      <!-- ── Step 3: Варіант замовлення + Стиль паркану ──────────── -->
-      <div class="step-content" id="step-3" style="overflow-y:auto">
+      <!-- ── Step 2: Варіант замовлення + Стиль паркану ──────────── -->
+      <div class="step-content" id="step-2" style="overflow-y:auto">
         <div class="step-body">
           <h2 class="panel-title">Який варіант замовлення вам ближчий?</h2>
           <div class="accord-list">
 
             <!-- Стандартне рішення (expanded) -->
             <div class="accord-item accord-open" id="acc-standard">
+              <div class="accord-marquee-wrap">
+                <div class="accord-marquee">
+                  &nbsp;Знижка -15%&nbsp;&nbsp;&nbsp;&nbsp;Знижка -15%&nbsp;&nbsp;&nbsp;&nbsp;Знижка -15%&nbsp;&nbsp;&nbsp;&nbsp;Знижка -15%&nbsp;&nbsp;&nbsp;&nbsp;Знижка -15%&nbsp;&nbsp;&nbsp;&nbsp;Знижка -15%&nbsp;&nbsp;&nbsp;&nbsp;Знижка -15%&nbsp;&nbsp;&nbsp;&nbsp;Знижка -15%&nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
+              </div>
               <div class="accord-head accord-head--on" onclick="selectAccord('standard')">
                 <div class="accord-radio accord-radio--on"></div>
                 <span class="accord-label">Стандартне рішення</span>
@@ -338,33 +295,12 @@
                 </span>
               </div>
               <div class="accord-body">
-                <div class="accord-marquee-wrap">
-                  <div class="accord-marquee">
-                    &nbsp;Знижка -15%&nbsp;&nbsp;&nbsp;&nbsp;Знижка -15%&nbsp;&nbsp;&nbsp;&nbsp;Знижка -15%&nbsp;&nbsp;&nbsp;&nbsp;Знижка -15%&nbsp;&nbsp;&nbsp;&nbsp;Знижка -15%&nbsp;&nbsp;&nbsp;&nbsp;Знижка -15%&nbsp;&nbsp;&nbsp;&nbsp;Знижка -15%&nbsp;&nbsp;&nbsp;&nbsp;Знижка -15%&nbsp;&nbsp;&nbsp;&nbsp;
-                  </div>
-                </div>
                 <div class="style-grid" id="rg-style">
 
                   <div class="style-card selected" data-v="1" onclick="selectStyle(this,1)">
                     <div class="style-check"></div>
                     <div class="style-preview">
-                      <svg viewBox="0 0 80 40" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="2"  y="2"  width="4"  height="36" fill="#2a2e2d"/>
-                        <rect x="74" y="2"  width="4"  height="36" fill="#2a2e2d"/>
-                        <rect x="6"  y="5"  width="68" height="3"  fill="#2a2e2d"/>
-                        <rect x="6"  y="32" width="68" height="3"  fill="#2a2e2d"/>
-                        <rect x="10" y="8"  width="2"  height="24" fill="#2a2e2d"/>
-                        <rect x="16" y="8"  width="2"  height="24" fill="#2a2e2d"/>
-                        <rect x="22" y="8"  width="2"  height="24" fill="#2a2e2d"/>
-                        <rect x="28" y="8"  width="2"  height="24" fill="#2a2e2d"/>
-                        <rect x="34" y="8"  width="2"  height="24" fill="#2a2e2d"/>
-                        <rect x="40" y="8"  width="2"  height="24" fill="#2a2e2d"/>
-                        <rect x="46" y="8"  width="2"  height="24" fill="#2a2e2d"/>
-                        <rect x="52" y="8"  width="2"  height="24" fill="#2a2e2d"/>
-                        <rect x="58" y="8"  width="2"  height="24" fill="#2a2e2d"/>
-                        <rect x="64" y="8"  width="2"  height="24" fill="#2a2e2d"/>
-                        <rect x="70" y="8"  width="2"  height="24" fill="#2a2e2d"/>
-                      </svg>
+                      <img src="assets/images/style_1_3x.webp" alt="Стиль №1">
                     </div>
                     <div class="style-label">Стиль №1</div>
                   </div>
@@ -372,24 +308,7 @@
                   <div class="style-card" data-v="2" onclick="selectStyle(this,2)">
                     <div class="style-check"></div>
                     <div class="style-preview">
-                      <svg viewBox="0 0 80 50" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="1"  y="2"  width="4" height="46" fill="#2a2e2d"/>
-                        <rect x="75" y="2"  width="4" height="46" fill="#2a2e2d"/>
-                        <rect x="5" y="18" width="70" height="3" fill="#2a2e2d"/>
-                        <rect x="5" y="28" width="70" height="3" fill="#2a2e2d"/>
-                        <rect x="5" y="38" width="70" height="3" fill="#2a2e2d"/>
-                        <rect x="9"  y="4"  width="2" height="42" fill="#2a2e2d"/>
-                        <rect x="15" y="4"  width="2" height="42" fill="#2a2e2d"/>
-                        <rect x="21" y="4"  width="2" height="42" fill="#2a2e2d"/>
-                        <rect x="27" y="4"  width="2" height="42" fill="#2a2e2d"/>
-                        <rect x="33" y="4"  width="2" height="42" fill="#2a2e2d"/>
-                        <rect x="39" y="4"  width="2" height="42" fill="#2a2e2d"/>
-                        <rect x="45" y="4"  width="2" height="42" fill="#2a2e2d"/>
-                        <rect x="51" y="4"  width="2" height="42" fill="#2a2e2d"/>
-                        <rect x="57" y="4"  width="2" height="42" fill="#2a2e2d"/>
-                        <rect x="63" y="4"  width="2" height="42" fill="#2a2e2d"/>
-                        <rect x="69" y="4"  width="2" height="42" fill="#2a2e2d"/>
-                      </svg>
+                      <img src="assets/images/style_2_3x.webp" alt="Стиль №2">
                     </div>
                     <div class="style-label">Стиль №2</div>
                   </div>
@@ -397,24 +316,7 @@
                   <div class="style-card" data-v="3" onclick="selectStyle(this,3)">
                     <div class="style-check"></div>
                     <div class="style-preview">
-                      <svg viewBox="0 0 80 50" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="1"  y="2"  width="4" height="46" fill="#2a2e2d"/>
-                        <rect x="75" y="2"  width="4" height="46" fill="#2a2e2d"/>
-                        <rect x="5" y="18" width="70" height="3" fill="#2a2e2d"/>
-                        <rect x="5" y="28" width="70" height="3" fill="#2a2e2d"/>
-                        <rect x="5" y="38" width="70" height="3" fill="#2a2e2d"/>
-                        <rect x="9"  y="4"  width="2" height="46" fill="#2a2e2d"/>
-                        <rect x="15" y="4"  width="2" height="46" fill="#2a2e2d"/>
-                        <rect x="21" y="4"  width="2" height="46" fill="#2a2e2d"/>
-                        <rect x="27" y="4"  width="2" height="46" fill="#2a2e2d"/>
-                        <rect x="33" y="4"  width="2" height="46" fill="#2a2e2d"/>
-                        <rect x="39" y="4"  width="2" height="46" fill="#2a2e2d"/>
-                        <rect x="45" y="4"  width="2" height="46" fill="#2a2e2d"/>
-                        <rect x="51" y="4"  width="2" height="46" fill="#2a2e2d"/>
-                        <rect x="57" y="4"  width="2" height="46" fill="#2a2e2d"/>
-                        <rect x="63" y="4"  width="2" height="46" fill="#2a2e2d"/>
-                        <rect x="69" y="4"  width="2" height="46" fill="#2a2e2d"/>
-                      </svg>
+                      <img src="assets/images/style_3_3x.webp" alt="Стиль №3">
                     </div>
                     <div class="style-label">Стиль №3</div>
                   </div>
@@ -422,19 +324,7 @@
                   <div class="style-card" data-v="4" onclick="selectStyle(this,4)">
                     <div class="style-check"></div>
                     <div class="style-preview">
-                      <svg viewBox="0 0 80 50" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="1"  y="2"  width="4" height="46" fill="#2a2e2d"/>
-                        <rect x="75" y="2"  width="4" height="46" fill="#2a2e2d"/>
-                        <rect x="1"  y="14" width="78" height="5" fill="#2a2e2d"/>
-                        <rect x="1"  y="36" width="78" height="5" fill="#2a2e2d"/>
-                        <rect x="12" y="0"  width="3" height="41" fill="#2a2e2d"/>
-                        <rect x="21" y="0"  width="3" height="41" fill="#2a2e2d"/>
-                        <rect x="30" y="0"  width="3" height="41" fill="#2a2e2d"/>
-                        <rect x="39" y="0"  width="3" height="41" fill="#2a2e2d"/>
-                        <rect x="48" y="0"  width="3" height="41" fill="#2a2e2d"/>
-                        <rect x="57" y="0"  width="3" height="41" fill="#2a2e2d"/>
-                        <rect x="66" y="0"  width="3" height="41" fill="#2a2e2d"/>
-                      </svg>
+                      <img src="assets/images/style_4_3x.webp" alt="Стиль №4">
                     </div>
                     <div class="style-label">Стиль №4</div>
                   </div>
@@ -442,20 +332,7 @@
                   <div class="style-card" data-v="5" onclick="selectStyle(this,5)">
                     <div class="style-check"></div>
                     <div class="style-preview">
-                      <svg viewBox="0 0 80 48" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="1"  y="2"  width="5" height="44" fill="#2a2e2d"/>
-                        <rect x="74" y="2"  width="5" height="44" fill="#2a2e2d"/>
-                        <rect x="12" y="2"  width="3" height="44" fill="#2a2e2d"/>
-                        <rect x="65" y="2"  width="3" height="44" fill="#2a2e2d"/>
-                        <rect x="6"  y="5"  width="68" height="4" fill="#2a2e2d"/>
-                        <rect x="6"  y="10" width="68" height="4" fill="#2a2e2d"/>
-                        <rect x="6"  y="15" width="68" height="4" fill="#2a2e2d"/>
-                        <rect x="6"  y="20" width="68" height="4" fill="#2a2e2d"/>
-                        <rect x="6"  y="25" width="68" height="4" fill="#2a2e2d"/>
-                        <rect x="6"  y="30" width="68" height="4" fill="#2a2e2d"/>
-                        <rect x="6"  y="35" width="68" height="4" fill="#2a2e2d"/>
-                        <rect x="6"  y="40" width="68" height="4" fill="#2a2e2d"/>
-                      </svg>
+                      <img src="assets/images/style_5_3x.webp" alt="Стиль №5">
                     </div>
                     <div class="style-label">Стиль №5</div>
                   </div>
@@ -463,21 +340,7 @@
                   <div class="style-card" data-v="6" onclick="selectStyle(this,6)">
                     <div class="style-check"></div>
                     <div class="style-preview">
-                      <svg viewBox="0 0 80 48" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="1"  y="2"  width="5" height="44" fill="#2a2e2d"/>
-                        <rect x="74" y="2"  width="5" height="44" fill="#2a2e2d"/>
-                        <rect x="12" y="2"  width="3" height="44" fill="#2a2e2d"/>
-                        <rect x="65" y="2"  width="3" height="44" fill="#2a2e2d"/>
-                        <rect x="6"  y="5"  width="68" height="4" fill="#2a2e2d"/>
-                        <rect x="6"  y="10" width="68" height="4" fill="#2a2e2d"/>
-                        <rect x="6"  y="15" width="68" height="4" fill="#2a2e2d"/>
-                        <rect x="6"  y="20" width="68" height="4" fill="#2a2e2d"/>
-                        <rect x="6"  y="25" width="68" height="4" fill="#2a2e2d"/>
-                        <rect x="6"  y="30" width="68" height="4" fill="#2a2e2d"/>
-                        <rect x="6"  y="35" width="68" height="2" fill="#2a2e2d"/>
-                        <rect x="6"  y="39" width="68" height="2" fill="#2a2e2d"/>
-                        <rect x="6"  y="43" width="68" height="2" fill="#2a2e2d"/>
-                      </svg>
+                      <img src="assets/images/style_6_3x.webp" alt="Стиль №6">
                     </div>
                     <div class="style-label">Стиль №6</div>
                   </div>
@@ -485,23 +348,7 @@
                   <div class="style-card" data-v="7" onclick="selectStyle(this,7)">
                     <div class="style-check"></div>
                     <div class="style-preview">
-                      <svg viewBox="0 0 80 48" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="1"  y="2"  width="5" height="44" fill="#2a2e2d"/>
-                        <rect x="74" y="2"  width="5" height="44" fill="#2a2e2d"/>
-                        <rect x="9"  y="5"  width="2" height="38" fill="#2a2e2d"/>
-                        <rect x="69" y="5"  width="2" height="38" fill="#2a2e2d"/>
-                        <rect x="9"  y="4"  width="62" height="3" fill="#2a2e2d"/>
-                        <rect x="9"  y="41" width="62" height="3" fill="#2a2e2d"/>
-                        <rect x="14" y="7"  width="2" height="34" fill="#2a2e2d"/>
-                        <rect x="20" y="7"  width="2" height="34" fill="#2a2e2d"/>
-                        <rect x="26" y="7"  width="2" height="34" fill="#2a2e2d"/>
-                        <rect x="32" y="7"  width="2" height="34" fill="#2a2e2d"/>
-                        <rect x="38" y="7"  width="2" height="34" fill="#2a2e2d"/>
-                        <rect x="44" y="7"  width="2" height="34" fill="#2a2e2d"/>
-                        <rect x="50" y="7"  width="2" height="34" fill="#2a2e2d"/>
-                        <rect x="56" y="7"  width="2" height="34" fill="#2a2e2d"/>
-                        <rect x="62" y="7"  width="2" height="34" fill="#2a2e2d"/>
-                      </svg>
+                      <img src="assets/images/style_7_3x.webp" alt="Стиль №7">
                     </div>
                     <div class="style-label">Стиль №7</div>
                   </div>
@@ -509,22 +356,7 @@
                   <div class="style-card" data-v="8" onclick="selectStyle(this,8)">
                     <div class="style-check"></div>
                     <div class="style-preview">
-                      <svg viewBox="0 0 80 48" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="1"  y="2"  width="5" height="44" fill="#2a2e2d"/>
-                        <rect x="74" y="2"  width="5" height="44" fill="#2a2e2d"/>
-                        <rect x="9"  y="5"  width="2" height="38" fill="#2a2e2d"/>
-                        <rect x="69" y="5"  width="2" height="38" fill="#2a2e2d"/>
-                        <rect x="9"  y="4"  width="62" height="3" fill="#2a2e2d"/>
-                        <rect x="9"  y="41" width="62" height="3" fill="#2a2e2d"/>
-                        <rect x="12" y="7"  width="5" height="34" fill="#2a2e2d"/>
-                        <rect x="20" y="7"  width="3" height="34" fill="#2a2e2d"/>
-                        <rect x="26" y="7"  width="5" height="34" fill="#2a2e2d"/>
-                        <rect x="34" y="7"  width="3" height="34" fill="#2a2e2d"/>
-                        <rect x="40" y="7"  width="5" height="34" fill="#2a2e2d"/>
-                        <rect x="48" y="7"  width="3" height="34" fill="#2a2e2d"/>
-                        <rect x="54" y="7"  width="5" height="34" fill="#2a2e2d"/>
-                        <rect x="62" y="7"  width="3" height="34" fill="#2a2e2d"/>
-                      </svg>
+                      <img src="assets/images/style_8_3x.webp" alt="Стиль №8">
                     </div>
                     <div class="style-label">Стиль №8</div>
                   </div>
@@ -557,13 +389,13 @@
           </div><!-- .accord-list -->
         </div>
         <div class="panel-nav">
-          <button class="btn-back" onclick="goStep(2)">НАЗАД</button>
-          <button class="btn-next" onclick="goStep(4)">ДАЛІ</button>
+          <button class="btn-back" onclick="goStep(1)">НАЗАД</button>
+          <button class="btn-next" onclick="goStep(3)">ДАЛІ</button>
         </div>
-      </div><!-- step-3 -->
+      </div><!-- step-2 -->
 
-      <!-- ── Step 4: Колір ──────────────────────────────────────────── -->
-      <div class="step-content" id="step-4">
+      <!-- ── Step 3: Колір ──────────────────────────────────────────── -->
+      <div class="step-content" id="step-3">
         <div class="step-body">
           <h2 class="panel-title">Який колір покриття?</h2>
           <div class="color-grid" id="color-grid">
@@ -604,6 +436,39 @@
               <div class="color-check"></div>
             </div>
 
+          </div>
+        </div>
+        <div class="panel-nav">
+          <button class="btn-back" onclick="goStep(2)">НАЗАД</button>
+          <button class="btn-next" onclick="goStep(4)">ДАЛІ</button>
+        </div>
+      </div><!-- step-3 -->
+
+      <!-- ── Step 4: Доставка ─────────────────────────────────────── -->
+      <div class="step-content" id="step-4">
+        <div class="step-body">
+          <h2 class="panel-title">Куди потрібна доставка?</h2>
+          <div class="delivery-banner">
+            <div class="delivery-text">
+              <strong>Доставка по<br>всій Україні</strong>
+            </div>
+            <div class="delivery-desc">
+              З Броварів або Тернополя —<br>залежно від вашого регіону.<br>Розраховується індивідуально.
+            </div>
+          </div>
+          <div class="config-fields">
+            <div class="config-field">
+              <div class="config-field-box">
+                <div class="config-field-label">Місто / населений пункт</div>
+                <input class="config-field-input" id="f-city" type="text" placeholder="">
+              </div>
+            </div>
+            <div class="config-field">
+              <div class="config-field-box">
+                <div class="config-field-label">Адреса</div>
+                <input class="config-field-input" id="f-address" type="text" placeholder="">
+              </div>
+            </div>
           </div>
         </div>
         <div class="panel-nav">

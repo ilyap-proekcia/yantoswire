@@ -572,11 +572,7 @@ function buildFence() {
 
   _mergeFenceGroup();
   updateStat();
-  // Keep lookAt at fence centre; setViewOffset (camera.js) handles visual centring
-  if (typeof CAM !== 'undefined' && typeof appMode !== 'undefined' && appMode === 'config') {
-    CAM.tCx = 0;
-    CAM.tCy = H / 2;
-  }
+  if (typeof adjustCameraToFence === 'function') adjustCameraToFence();
   invalidate(); // fence changed → redraw
 }
 

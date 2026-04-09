@@ -10,19 +10,45 @@
  */
 
 // ─── STEP NAVIGATION ─────────────────────────────────────────
-const STEP_LABELS = ['Розмір', 'Комплектація', 'Доставка', 'Стиль', 'Колір', 'Контакти'];
+const STEP_LABELS = ['Розмір', 'Комплектація', 'Стиль', 'Колір', 'Доставка', 'Контакти'];
 
-// Animation timings (ms)
-const SB_COLLAPSE = 210;
-const SB_EXPAND   = 250;
-const SB_LABEL    = 160;
+// Animation timing (ms) — collapse and expand happen simultaneously
+const SB_ANIM = 230;
 let _sbCleanup = null;
 
-function _sbClear(item) {
-  item.style.flex = item.style.width = item.style.background = item.style.transition = '';
+// Nav button animation state
+const NAV_DUR = 320;
+let _navAnimating = false;
+
+function _animateNavEnter() {
+  const nav = document.querySelector('#step-1 .panel-nav');
+  if (!nav) return;
+  nav.classList.remove('nav-exit');
+  nav.classList.add('nav-enter');
+  setTimeout(() => nav.classList.remove('nav-enter'), NAV_DUR + 50);
 }
 
 function goStep(n) {
+  // ── Nav button animation: only for step 0 ↔ 1 boundary ──
+  const curEl = document.querySelector('.step-content.active');
+  const curN  = curEl ? parseInt(curEl.id.replace('step-', ''), 10) : -1;
+
+  if (!_navAnimating && n === 0 && curN === 1) {
+    // Backward: animate btn-back out, then switch step
+    const nav1 = document.querySelector('#step-1 .panel-nav');
+    if (nav1) {
+      _navAnimating = true;
+      nav1.classList.remove('nav-enter');
+      nav1.classList.add('nav-exit');
+      setTimeout(() => {
+        nav1.classList.remove('nav-exit');
+        goStep(0);       // _navAnimating still true → не триггерит повторно
+        _navAnimating = false;
+      }, NAV_DUR);
+      return;
+    }
+  }
+
   // ── Switch step content ──
   document.querySelectorAll('.step-content').forEach(el => el.classList.remove('active'));
   document.querySelectorAll('.sp-item').forEach((el, i) => {
@@ -32,6 +58,11 @@ function goStep(n) {
   });
   const target = document.getElementById('step-' + n);
   if (target) target.classList.add('active');
+
+  // ── Nav enter animation (step 0 → 1 only) ──
+  if (!_navAnimating && n === 1 && curN === 0) {
+    requestAnimationFrame(() => _animateNavEnter());
+  }
 
   // ── Step bar ──
   const items    = Array.from(document.querySelectorAll('.step-bar__item'));
@@ -50,81 +81,78 @@ function goStep(n) {
     return;
   }
 
-  const fromLabel = fromItem.querySelector('.step-bar__label');
-  const toLabel   = toItem.querySelector('.step-bar__label');
+  // Measure all widths BEFORE touching anything
+  const allWidths = items.map(i => i.getBoundingClientRect().width);
   const expandedW = fromItem.getBoundingClientRect().width;
   const refItem   = items.find(i => i !== fromItem && i !== toItem);
   const compactW  = refItem ? refItem.getBoundingClientRect().width : 48;
 
-  const timers = [];
-  _sbCleanup = () => {
-    timers.forEach(clearTimeout);
-    [fromItem, toItem].forEach(_sbClear);
-    [fromLabel, toLabel].forEach(l => { l.style.opacity = l.style.transition = ''; });
-    items.forEach(item => {
-      const s = parseInt(item.dataset.step, 10);
-      item.classList.toggle('is-active', s === n);
-      item.classList.toggle('is-done',   s < n);
-    });
-    _sbCleanup = null;
-  };
+  // 1. Pin ALL items to explicit pixel widths — prevents flex redistribution
+  items.forEach((item, idx) => {
+    item.style.transition = 'none';
+    item.style.flex       = 'none';
+    item.style.width      = allWidths[idx] + 'px';
+  });
 
-  // ── PHASE 1: Collapse from-item ────────────────────────────
-  fromLabel.style.transition = 'none';
-  fromLabel.style.opacity    = '0';
-  fromItem.style.transition  = 'none';
-  fromItem.style.flex        = 'none';
-  fromItem.style.width       = expandedW + 'px';
+  // Update ALL classes in one pass (after pinning, so CSS flex can't redistribute)
+  items.forEach(item => {
+    const s = parseInt(item.dataset.step, 10);
+    item.classList.remove('is-active', 'is-done');
+    if (s === n)   item.classList.add('is-active');
+    else if (s < n) item.classList.add('is-done');
+  });
 
-  requestAnimationFrame(() => requestAnimationFrame(() => {
-    const doneBg = n > parseInt(fromItem.dataset.step, 10) ? 'var(--sandstone)' : '#EEEEEE';
-    fromItem.style.transition = `width ${SB_COLLAPSE}ms cubic-bezier(0.4,0,0.2,1),`
-                               + `background ${SB_COLLAPSE}ms ease`;
-    fromItem.style.width      = compactW + 'px';
-    fromItem.style.background = doneBg;
-  }));
-
-  // ── PHASE 2: Expand to-item ────────────────────────────────
-  const t1 = setTimeout(() => {
-    // Update all class states
-    items.forEach(item => {
-      const s = parseInt(item.dataset.step, 10);
-      item.classList.remove('is-active', 'is-done');
-      if (s === n) item.classList.add('is-active');
-      else if (s < n) item.classList.add('is-done');
-      if (item !== toItem && item !== fromItem) _sbClear(item);
-    });
-    _sbClear(fromItem);
-    fromLabel.style.transition = fromLabel.style.opacity = '';
-
-    // Pin to-item at compact, hide label
+  // Hide label of toItem before expansion (below clip line)
+  const toLabel = toItem.querySelector('.step-bar__label');
+  if (toLabel) {
     toLabel.style.transition = 'none';
     toLabel.style.opacity    = '0';
-    toItem.style.transition  = 'none';
-    toItem.style.flex        = 'none';
-    toItem.style.width       = compactW + 'px';
+    toLabel.style.transform  = 'translateY(8px)';
+  }
 
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      toItem.style.transition = `width ${SB_EXPAND}ms cubic-bezier(0.4,0,0.2,1)`;
-      toItem.style.width      = expandedW + 'px';
-    }));
+  // 2. Start BOTH animations simultaneously in next rAF
+  const easing     = 'ease-in-out';
+  const labelDur   = Math.round(SB_ANIM * 0.5);
+  const labelDelay = Math.round(SB_ANIM * 0.5);
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    fromItem.style.transition = `width ${SB_ANIM}ms ${easing}`;
+    fromItem.style.width      = compactW + 'px';
 
-    // ── PHASE 3: Fade in label at ~55% of expand ───────────
-    const t2 = setTimeout(() => {
-      toLabel.style.transition = `opacity ${SB_LABEL}ms ease`;
-      toLabel.style.opacity    = '1';
+    toItem.style.transition = `width ${SB_ANIM}ms ${easing}`;
+    toItem.style.width      = expandedW + 'px';
 
-      // ── PHASE 4: Cleanup ───────────────────────────────────
-      const t3 = setTimeout(() => {
-        _sbClear(toItem);
-        toLabel.style.transition = toLabel.style.opacity = '';
-        _sbCleanup = null;
-      }, SB_LABEL + 30);
-      timers.push(t3);
-    }, Math.round(SB_EXPAND * 0.55));
-    timers.push(t2);
-  }, SB_COLLAPSE + 20);
-  timers.push(t1);
+    // Label slides up from bottom at 50% of animation
+    const labelTimer = setTimeout(() => {
+      if (toLabel) {
+        const t = `${labelDur}ms ${easing}`;
+        toLabel.style.transition = `opacity ${t}, transform ${t}`;
+        toLabel.style.opacity    = '1';
+        toLabel.style.transform  = 'translateY(0)';
+      }
+    }, labelDelay);
+
+    // Cleanup: restore CSS flex control
+    const cleanupTimer = setTimeout(() => {
+      items.forEach(item => {
+        item.style.transition = '';
+        item.style.flex       = '';
+        item.style.width      = '';
+      });
+      if (toLabel) { toLabel.style.transition = ''; toLabel.style.opacity = ''; toLabel.style.transform = ''; }
+      _sbCleanup = null;
+    }, SB_ANIM + labelDur + 20);
+
+    _sbCleanup = () => {
+      clearTimeout(labelTimer);
+      clearTimeout(cleanupTimer);
+      items.forEach(item => {
+        item.style.transition = '';
+        item.style.flex       = '';
+        item.style.width      = '';
+      });
+      if (toLabel) { toLabel.style.transition = ''; toLabel.style.opacity = ''; toLabel.style.transform = ''; }
+    };
+  }));
 }
 
 // ─── RADIO CARD SELECTION (list layout) ──────────────────────
