@@ -233,9 +233,7 @@ function selectColor(el, hex, name, ral) {
 
 // ─── FORM SUBMIT ──────────────────────────────────────────────
 function submitForm() {
-  document.querySelectorAll('.step-content').forEach(el => el.classList.remove('active'));
-  document.querySelectorAll('.sp-item').forEach(el => el.classList.add('done'));
-  document.getElementById('success-screen').classList.add('active');
+  window.location.href = 'thanks.html';
 }
 
 // ─── RESTART ─────────────────────────────────────────────────

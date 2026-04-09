@@ -1,0 +1,103 @@
+/* ─── 404 PAGE ──────────────────────────────────────────────── */
+
+html, body {
+  background: var(--graphite) !important;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── MAIN ──────────────────────────────────────────────────── */
+
+.not-found-main {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ─── GIANT 404 (background layer) ─────────────────────────── */
+
+.not-found-404 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: min(calc(var(--dvh, 1vh) * 90), 1100px);
+  line-height: 1;
+  color: var(--marsala);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+/* ─── CONTENT (foreground layer) ────────────────────────────── */
+
+.not-found-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 80px;
+}
+
+.not-found-title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 64px;
+  line-height: 98%;
+  text-align: center;
+  color: #fff;
+  margin: 0;
+}
+
+.not-found-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 64px;
+  background: #fff;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 120%;
+  text-transform: uppercase;
+  color: var(--graphite);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+
+.not-found-btn:hover {
+  background: rgba(255, 255, 255, 0.85);
+}
+
+/* ─── ADAPTIVE ──────────────────────────────────────────────── */
+
+@media (max-width: 1024px) {
+  .not-found-title   { font-size: 52px; }
+  .not-found-content { gap: 64px; }
+}
+
+@media (max-width: 768px) {
+  .not-found-404 {
+    font-size: 65vw;
+  }
+  .not-found-title   { font-size: 40px; }
+  .not-found-content { gap: 48px; }
+  .not-found-btn     { padding: 20px 40px; font-size: 14px; }
+}
+
+@media (max-width: 480px) {
+  .not-found-title   { font-size: 32px; }
+  .not-found-content { gap: 32px; }
+  .not-found-btn     { width: 100%; max-width: 320px; padding: 18px 24px; }
+}

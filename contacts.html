@@ -130,8 +130,8 @@
       <span class="ftr-copy-text">© <span class="ftr-year"></span> Усі права захищені</span>
     </div>
     <div class="ftr-links">
-      <a href="#" class="ftr-link">Договір оферти</a>
-      <a href="#" class="ftr-link">Політика конфіденційності</a>
+      <a href="cookies.html" class="ftr-link">Договір оферти</a>
+      <a href="privacy.html" class="ftr-link">Політика конфіденційності</a>
     </div>
     <div class="ftr-credit">
       <span class="ftr-credit-text">Хто створив сайт?</span>
@@ -145,6 +145,12 @@
 <script>
   /* Авто-рік */
   document.querySelectorAll('.ftr-year').forEach(el => el.textContent = new Date().getFullYear());
+
+  /* Редирект після відправки форми */
+  document.querySelector('.contacts-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    window.location.href = 'thanks.html';
+  });
 
   /* Адаптивний хедер */
   const hdr = document.getElementById('site-header');

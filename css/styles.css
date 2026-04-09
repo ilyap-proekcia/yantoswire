@@ -490,7 +490,7 @@ h1{
   flex-shrink:0;
 }
 .delivery-text{
-  font-family:'Montserrat',sans-serif;font-weight:700;
+  font-family:'Montserrat',sans-serif;font-weight:800;
   font-size:clamp(14px,1.042vw,20px);color:#fff;
   line-height:1.2;letter-spacing:-0.02em;
   flex-shrink:0;
@@ -1608,6 +1608,7 @@ h2.wipe-heading.is-visible,
   display: block;
   height: clamp(14px, 1.25vw, 24px); /* 24/1920 */
   width: auto;
+  filter: brightness(0) invert(1); /* white on dark bg */
 }
 
 /* ── Footer theme variants ──────────────────────────────────── */
@@ -1630,7 +1631,7 @@ h2.wipe-heading.is-visible,
 }
 .site-footer--sandstone .ftr-credit-logo img,
 .site-footer--porcelain .ftr-credit-logo img {
-  /* SVG fill уже #3F4443 — фильтр не нужен */
+  filter: none;
 }
 
 /* ─── MOBILE FOOTER (about / contacts / works) ───────────────
