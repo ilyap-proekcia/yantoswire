@@ -85,9 +85,9 @@
   if (callback) {
     callback.addEventListener('click', function () {
       close();
-      // Add callback form logic here if needed
       setTimeout(function () {
-        window.location.href = 'contacts.html';
+        var modal = document.getElementById('callback-modal');
+        if (modal) modal.classList.add('cbm--open');
       }, CONTENT_OUT + COLLAPSE_DUR);
     });
   }

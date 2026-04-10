@@ -541,6 +541,30 @@
   </div>
 </footer>
 
+<!-- ─── CALLBACK MODAL ───────────────────────────────────────────── -->
+<div id="callback-modal">
+  <div class="cbm-overlay"></div>
+  <div class="cbm-box">
+    <button class="cbm-close" aria-label="Закрити">
+      <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 10L30 30M10 30L30 10" stroke="white" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <h2 class="cbm-heading">Зворотній дзвінок</h2>
+    <p class="cbm-sub">Залиште контакти і ми вам зателефонуємо</p>
+    <form class="cbm-form" novalidate>
+      <div class="cbm-fields">
+        <input class="cbm-input" type="text" placeholder="Ім'я" name="name" autocomplete="given-name">
+        <input class="cbm-input" type="tel" placeholder="Номер телефону" name="phone" autocomplete="tel">
+      </div>
+      <div class="cbm-submit-wrap">
+        <button type="submit" class="cbm-submit">Відправити</button>
+        <p class="cbm-disclaimer">Натискаючи "Відправити", я приймаю правила обробки персональних даних</p>
+      </div>
+    </form>
+  </div>
+</div>
+
 <!-- ─── SCRIPTS ──────────────────────────────────────────────────── -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/RGBELoader.js"></script>
@@ -557,6 +581,7 @@
 <script src="js/wipe-headings.js"></script>
 <script src="js/mob-menu.js"></script>
 <script src="js/dev-panel.js"></script>
+<script src="js/callback-modal.js"></script>
 <script>
   document.querySelectorAll('.ftr-year').forEach(el => el.textContent = new Date().getFullYear());
 </script>
